@@ -40,7 +40,8 @@ public class DraweeSimpleFragment extends BaseShowcaseFragment {
     final Uri uri = imageUriProvider.createSampleUri(ImageUriProvider.ImageSize.M);
 
     SimpleDraweeView simpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.drawee_view);
-    simpleDraweeView.setImageURI(uri);
+//    simpleDraweeView.setImageURI("embedded:///storage/emulated/0/Android/data/remix.myplayer/cache/embedded/Adele - Rolling In The Deep.jpg");
+    simpleDraweeView.setImageURI("embedded:///storage/emulated/0/Music/Linkin park/Faint.mp3");
   }
 
   @Override

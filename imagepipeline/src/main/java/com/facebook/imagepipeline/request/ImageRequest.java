@@ -8,6 +8,7 @@
 package com.facebook.imagepipeline.request;
 
 import static com.facebook.imagepipeline.common.SourceUriType.SOURCE_TYPE_DATA;
+import static com.facebook.imagepipeline.common.SourceUriType.SOURCE_TYPE_EMBEDDED_RESOURCE;
 import static com.facebook.imagepipeline.common.SourceUriType.SOURCE_TYPE_LOCAL_ASSET;
 import static com.facebook.imagepipeline.common.SourceUriType.SOURCE_TYPE_LOCAL_CONTENT;
 import static com.facebook.imagepipeline.common.SourceUriType.SOURCE_TYPE_LOCAL_IMAGE_FILE;
@@ -40,51 +41,84 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public class ImageRequest {
 
-  /** Cache choice */
+  /**
+   * Cache choice
+   */
   private final CacheChoice mCacheChoice;
 
-  /** Source Uri */
+  /**
+   * Source Uri
+   */
   private final Uri mSourceUri;
 
-  private final @SourceUriType int mSourceUriType;
+  private final @SourceUriType
+  int mSourceUriType;
 
-  /** Source File - for local fetches only, lazily initialized */
+  /**
+   * Source File - for local fetches only, lazily initialized
+   */
   private File mSourceFile;
 
-  /** If set - the client will receive intermediate results */
+  /**
+   * If set - the client will receive intermediate results
+   */
   private final boolean mProgressiveRenderingEnabled;
 
-  /** If set the client will receive thumbnail previews for local images, before the whole image */
+  /**
+   * If set the client will receive thumbnail previews for local images, before the whole image
+   */
   private final boolean mLocalThumbnailPreviewsEnabled;
 
   private final ImageDecodeOptions mImageDecodeOptions;
 
-  /** resize options */
-  private final @Nullable ResizeOptions mResizeOptions;
+  /**
+   * resize options
+   */
+  private final @Nullable
+  ResizeOptions mResizeOptions;
 
-  /** rotation options */
+  /**
+   * rotation options
+   */
   private final RotationOptions mRotationOptions;
 
-  /** Range of bytes to request from the network */
-  private final @Nullable BytesRange mBytesRange;
+  /**
+   * Range of bytes to request from the network
+   */
+  private final @Nullable
+  BytesRange mBytesRange;
 
-  /** Priority levels of this request. */
+  /**
+   * Priority levels of this request.
+   */
   private final Priority mRequestPriority;
 
-  /** Lowest level that is permitted to fetch an image from */
+  /**
+   * Lowest level that is permitted to fetch an image from
+   */
   private final RequestLevel mLowestPermittedRequestLevel;
 
-  /** Whether the disk cache should be used for this request */
+  /**
+   * Whether the disk cache should be used for this request
+   */
   private final boolean mIsDiskCacheEnabled;
 
-  /** Whether the memory cache should be used for this request */
+  /**
+   * Whether the memory cache should be used for this request
+   */
   private final boolean mIsMemoryCacheEnabled;
 
-  /** Postprocessor to run on the output bitmap. */
-  private final @Nullable Postprocessor mPostprocessor;
+  /**
+   * Postprocessor to run on the output bitmap.
+   */
+  private final @Nullable
+  Postprocessor mPostprocessor;
 
-  /** Request listener to use for this image request */
-  private final @Nullable RequestListener mRequestListener;
+  /**
+   * Request listener to use for this image request
+   */
+  private final @Nullable
+  RequestListener mRequestListener;
 
   public static ImageRequest fromFile(@Nullable File file) {
     return (file == null) ? null : ImageRequest.fromUri(UriUtil.getUriForFile(file));
@@ -131,7 +165,8 @@ public class ImageRequest {
     return mSourceUri;
   }
 
-  public @SourceUriType int getSourceUriType() {
+  public @SourceUriType
+  int getSourceUriType() {
     return mSourceUriType;
   }
 
@@ -143,7 +178,8 @@ public class ImageRequest {
     return (mResizeOptions != null) ? mResizeOptions.height : (int) BitmapUtil.MAX_BITMAP_SIZE;
   }
 
-  public @Nullable ResizeOptions getResizeOptions() {
+  public @Nullable
+  ResizeOptions getResizeOptions() {
     return mResizeOptions;
   }
 
@@ -199,11 +235,13 @@ public class ImageRequest {
     return mSourceFile;
   }
 
-  public @Nullable Postprocessor getPostprocessor() {
+  public @Nullable
+  Postprocessor getPostprocessor() {
     return mPostprocessor;
   }
 
-  public @Nullable RequestListener getRequestListener() {
+  public @Nullable
+  RequestListener getRequestListener() {
     return mRequestListener;
   }
 
@@ -304,15 +342,19 @@ public class ImageRequest {
 
   /**
    * This is a utility method which returns the type of Uri
+   *
    * @param uri The Uri to test
    * @return The type of the given Uri if available or SOURCE_TYPE_UNKNOWN if not
    */
-  private static @SourceUriType int getSourceUriType(final Uri uri) {
+  private static @SourceUriType
+  int getSourceUriType(final Uri uri) {
     if (uri == null) {
       return SOURCE_TYPE_UNKNOWN;
     }
     if (UriUtil.isNetworkUri(uri)) {
       return SOURCE_TYPE_NETWORK;
+    } else if (UriUtil.isEmbeddedUri(uri)) {
+      return SOURCE_TYPE_EMBEDDED_RESOURCE;
     } else if (UriUtil.isLocalFileUri(uri)) {
       if (MediaUtils.isVideo(MediaUtils.extractMime(uri.getPath()))) {
         return SOURCE_TYPE_LOCAL_VIDEO_FILE;
@@ -327,7 +369,7 @@ public class ImageRequest {
       return SOURCE_TYPE_LOCAL_RESOURCE;
     } else if (UriUtil.isDataUri(uri)) {
       return SOURCE_TYPE_DATA;
-    } else if (UriUtil.isQualifiedResourceUri(uri))  {
+    } else if (UriUtil.isQualifiedResourceUri(uri)) {
       return SOURCE_TYPE_QUALIFIED_RESOURCE;
     } else {
       return SOURCE_TYPE_UNKNOWN;

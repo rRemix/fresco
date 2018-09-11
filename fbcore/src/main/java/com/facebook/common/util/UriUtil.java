@@ -25,6 +25,11 @@ public class UriUtil {
   public static final String HTTPS_SCHEME = "https";
 
   /**
+   * Embedded scheme for URIs
+   */
+  public static final String EMBEDDED_SCHEME = "embedded";
+
+  /**
    * File scheme for URIs
    */
   public static final String LOCAL_FILE_SCHEME = "file";
@@ -77,6 +82,11 @@ public class UriUtil {
       // This should never happen since we got a valid uri
       throw new RuntimeException(e);
     }
+  }
+
+  public static boolean isEmbeddedUri(@Nullable Uri uri){
+    final String scheme = getSchemeOrNull(uri);
+    return EMBEDDED_SCHEME.equals(scheme);
   }
 
   /**

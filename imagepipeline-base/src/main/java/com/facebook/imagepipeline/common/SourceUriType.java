@@ -7,6 +7,7 @@
 package com.facebook.imagepipeline.common;
 
 import static com.facebook.imagepipeline.common.SourceUriType.SOURCE_TYPE_DATA;
+import static com.facebook.imagepipeline.common.SourceUriType.SOURCE_TYPE_EMBEDDED_RESOURCE;
 import static com.facebook.imagepipeline.common.SourceUriType.SOURCE_TYPE_LOCAL_ASSET;
 import static com.facebook.imagepipeline.common.SourceUriType.SOURCE_TYPE_LOCAL_CONTENT;
 import static com.facebook.imagepipeline.common.SourceUriType.SOURCE_TYPE_LOCAL_FILE;
@@ -22,8 +23,7 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 
 /**
- * This is the interface we use in order to define different types of Uri an ImageRequest
- * can have.
+ * This is the interface we use in order to define different types of Uri an ImageRequest can have.
  */
 @Retention(SOURCE)
 @IntDef({
@@ -36,7 +36,8 @@ import java.lang.annotation.Retention;
     SOURCE_TYPE_LOCAL_ASSET,
     SOURCE_TYPE_LOCAL_RESOURCE,
     SOURCE_TYPE_DATA,
-    SOURCE_TYPE_QUALIFIED_RESOURCE
+    SOURCE_TYPE_QUALIFIED_RESOURCE,
+    SOURCE_TYPE_EMBEDDED_RESOURCE
 })
 public @interface SourceUriType {
 
@@ -50,4 +51,5 @@ public @interface SourceUriType {
   int SOURCE_TYPE_LOCAL_RESOURCE = 6;
   int SOURCE_TYPE_DATA = 7;
   int SOURCE_TYPE_QUALIFIED_RESOURCE = 8;
+  int SOURCE_TYPE_EMBEDDED_RESOURCE = 9;
 }
