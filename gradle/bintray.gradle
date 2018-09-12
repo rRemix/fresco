@@ -2,11 +2,11 @@
 apply plugin: 'com.jfrog.bintray'
 
 def getBintrayUsername() {
-    return properties.get('bintrayUsername', System.getenv('BINTRAY_USERNAME'))
+    return properties.get('bintrayUsername', "rRemix")
 }
 
 def getBintrayApiKey() {
-    return properties.get('bintrayApiKey',  System.getenv('BINTRAY_API_KEY'))
+    return properties.get('bintrayApiKey', "22023ffcfad889ae487049a95f7c50fb522dfcef")
 }
 
 def getBintrayGpgPassword() {
@@ -14,11 +14,11 @@ def getBintrayGpgPassword() {
 }
 
 def getMavenCentralUsername() {
-    return properties.get('mavenCentralUsername', System.getenv('MAVEN_CENTRAL_USERNAME'))
+    return properties.get('mavenCentralUsername',"rRemix")
 }
 
 def getMavenCentralPassword() {
-    return properties.get('mavenCentralPassword', System.getenv('MAVEN_CENTRAL_PASSWORD'))
+    return properties.get('mavenCentralPassword', "xbr19921010")
 }
 
 def shouldSyncWithMavenCentral() {
@@ -29,29 +29,31 @@ def dryRunOnly() {
     return properties.get('dryRun', false)
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 bintray {
-    user = getBintrayUsername()
-    key = getBintrayApiKey()
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
     configurations = ['archives']
     pkg {
         repo = bintrayRepo
-        userOrg =  bintrayUserOrg
+        userOrg = bintrayUserOrg
         name = bintrayName
         desc = bintrayDescription
         websiteUrl = projectUrl
         issueTrackerUrl = issuesUrl
         vcsUrl = scmUrl
-        licenses = projectLicenses
+        licenses = ['MIT']
         dryRun = dryRunOnly()
         override = true
         publish = true
         publicDownloadNumbers = true
         version {
             desc = bintrayDescription
-            gpg {
-                sign = true
-                passphrase = getBintrayGpgPassword()
-            }
+//            gpg {
+//                sign = true
+//                passphrase = getBintrayGpgPassword()
+//            }
             mavenCentralSync {
                 sync = shouldSyncWithMavenCentral()
                 user = getMavenCentralUsername()
