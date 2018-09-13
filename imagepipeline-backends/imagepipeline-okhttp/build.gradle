@@ -9,7 +9,7 @@ dependencies {
   implementation project(':fbcore')
   implementation project(':imagepipeline')
 }
-apply from: rootProject.file('release.gradle')
+//apply from: rootProject.file('release.gradle')
 
 android {
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -28,9 +28,9 @@ android {
     }
 }
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-artifacts.add('archives', sourcesJar)
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//artifacts.add('archives', sourcesJar)
 
