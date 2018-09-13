@@ -26,7 +26,7 @@ dependencies {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
 }
-apply from: rootProject.file('release.gradle')
+//apply from: rootProject.file('release.gradle')
 
 // We download various C++ open-source dependencies from SourceForge into nativedeps/downloads.
 // We then copy both downloaded code and our custom makefiles and headers into nativedeps/merge.
@@ -49,8 +49,8 @@ android {
     ndkLibs.each { lib -> makeNdkTasks lib[0], lib[1] }
 }
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-artifacts.add('archives', sourcesJar)
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//artifacts.add('archives', sourcesJar)

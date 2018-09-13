@@ -23,7 +23,7 @@ dependencies {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
 }
-apply from: rootProject.file('release.gradle')
+//apply from: rootProject.file('release.gradle')
 
 android {
 
@@ -35,8 +35,8 @@ android {
     }
 }
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-artifacts.add('archives', sourcesJar)
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//artifacts.add('archives', sourcesJar)

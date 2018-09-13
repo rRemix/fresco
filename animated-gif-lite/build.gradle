@@ -8,7 +8,7 @@ dependencies {
     implementation project(':animated-base')
     compileOnly "com.android.support:support-annotations:${SUPPORT_LIB_VERSION}"
 }
-apply from: rootProject.file('release.gradle')
+//apply from: rootProject.file('release.gradle')
 
 android {
 
@@ -20,8 +20,8 @@ android {
     }
 }
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-artifacts.add('archives', sourcesJar)
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//artifacts.add('archives', sourcesJar)
