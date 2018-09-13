@@ -34,7 +34,7 @@ import com.facebook.imagepipeline.producers.DataFetchProducer;
 import com.facebook.imagepipeline.producers.DecodeProducer;
 import com.facebook.imagepipeline.producers.DiskCacheReadProducer;
 import com.facebook.imagepipeline.producers.DiskCacheWriteProducer;
-import com.facebook.imagepipeline.producers.EmbeddedProducer;
+import com.facebook.imagepipeline.producers.EmbeddedCoverProducer;
 import com.facebook.imagepipeline.producers.EncodedCacheKeyMultiplexProducer;
 import com.facebook.imagepipeline.producers.EncodedMemoryCacheProducer;
 import com.facebook.imagepipeline.producers.LocalAssetFetchProducer;
@@ -363,9 +363,10 @@ public class ProducerFactory {
         mBitmapPrepareToDrawForPrefetch);
   }
 
-  public EmbeddedProducer newEmbeddedProducer() {
-    return new EmbeddedProducer(
+
+  public EmbeddedCoverProducer newEmbeddedCoverProducer(){
+    return new EmbeddedCoverProducer(
         mExecutorSupplier.forLocalStorageRead(),
-        mContentResolver);
+        mPooledByteBufferFactory);
   }
 }

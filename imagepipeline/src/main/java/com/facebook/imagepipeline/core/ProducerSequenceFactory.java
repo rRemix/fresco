@@ -31,7 +31,7 @@ import com.facebook.imagepipeline.producers.BitmapMemoryCacheKeyMultiplexProduce
 import com.facebook.imagepipeline.producers.BitmapMemoryCacheProducer;
 import com.facebook.imagepipeline.producers.DecodeProducer;
 import com.facebook.imagepipeline.producers.DiskCacheReadProducer;
-import com.facebook.imagepipeline.producers.EmbeddedProducer;
+import com.facebook.imagepipeline.producers.EmbeddedCoverProducer;
 import com.facebook.imagepipeline.producers.EncodedMemoryCacheProducer;
 import com.facebook.imagepipeline.producers.LocalAssetFetchProducer;
 import com.facebook.imagepipeline.producers.LocalContentUriFetchProducer;
@@ -333,12 +333,19 @@ public class ProducerSequenceFactory {
 
   private synchronized Producer<CloseableReference<CloseableImage>> getEmbeddedFetchSequence() {
     if (mEmbeddedFetchSequence == null) {
-      EmbeddedProducer embeddedProducer =
-          mProducerFactory.newEmbeddedProducer();
+      EmbeddedCoverProducer embeddedProducer =
+          mProducerFactory.newEmbeddedCoverProducer();
       mEmbeddedFetchSequence =
-          newBitmapCacheGetToBitmapCacheSequence(embeddedProducer);
+          newBitmapCacheGetToLocalTransformSequence(embeddedProducer);
     }
     return mEmbeddedFetchSequence;
+//    if (mEmbeddedFetchSequence == null) {
+//      EmbeddedProducer embeddedProducer =
+//          mProducerFactory.newEmbeddedProducer();
+//      mEmbeddedFetchSequence =
+//          newBitmapCacheGetToBitmapCacheSequence(embeddedProducer);
+//    }
+//    return mEmbeddedFetchSequence;
   }
 
   /**
