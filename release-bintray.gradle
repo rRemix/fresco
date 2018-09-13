@@ -6,11 +6,11 @@ ext {
     bintrayUserOrg = 'rremix'
     bintrayName = "${GROUP}:${POM_ARTIFACT_ID}"
     bintrayDescription = POM_DESCRIPTION
-    projectUrl = 'https://github.com/rRemix/fresco'
-    issuesUrl = 'https://github.com/rRemix/fresco/issues'
-    scmUrl = 'https://github.com/rRemix/fresco.git'
-    scmConnection = 'scm:git:https://github.com/rRemix/fresco.git'
-    scmDeveloperConnection = 'scm:git:git@github.com:rRemix/fresco.git'
+    projectUrl = 'https://github.com/facebook/fresco'
+    issuesUrl = 'https://github.com/facebook/fresco/issues'
+    scmUrl = 'https://github.com/facebook/fresco.git'
+    scmConnection = 'scm:git:https://github.com/facebook/fresco.git'
+    scmDeveloperConnection = 'scm:git:git@github.com:facebook/fresco.git'
 
     publishedGroupId = GROUP
     libraryName = 'fresco'
@@ -22,7 +22,7 @@ ext {
     projectLicenses = {
         license {
             name 'MIT License'
-            url 'https://github.com/rRemix/fresco/blob/master/LICENSE'
+            url 'https://github.com/facebook/fresco/blob/master/LICENSE'
             distribution 'repo'
         }
     }
