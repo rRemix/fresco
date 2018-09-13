@@ -26,7 +26,7 @@ import java.util.concurrent.Executor;
 
 public class EmbeddedProducer implements Producer<CloseableReference<CloseableImage>> {
 
-  public static final String PRODUCER_NAME = "AudioThumbnailProducer";
+  public static final String PRODUCER_NAME = "EmbeddedProducer";
   @VisibleForTesting
   static final String CREATED_THUMBNAIL = "createdThumbnail";
   private final Executor mExecutor;
