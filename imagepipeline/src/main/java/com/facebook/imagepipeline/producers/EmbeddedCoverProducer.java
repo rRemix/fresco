@@ -2,9 +2,9 @@ package com.facebook.imagepipeline.producers;
 
 import android.annotation.TargetApi;
 import android.media.MediaMetadataRetriever;
-import android.net.Uri;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import com.facebook.common.memory.PooledByteBufferFactory;
 import com.facebook.imagepipeline.image.EncodedImage;
 import com.facebook.imagepipeline.request.ImageRequest;
@@ -51,7 +51,11 @@ public class EmbeddedCoverProducer extends LocalFetchProducer {
 
   @Nullable
   private String getLocalFilePath(ImageRequest imageRequest) {
-    final Uri uri = imageRequest.getSourceUri();
-    return uri != null ? uri.getPath() : null;
+    final String uriString =
+        imageRequest.getSourceUri() != null ? imageRequest.getSourceUri().toString() : "";
+    if (TextUtils.isEmpty(uriString)) {
+      return null;
+    }
+    return uriString.substring("embedded://".length(), uriString.length());
   }
 }
