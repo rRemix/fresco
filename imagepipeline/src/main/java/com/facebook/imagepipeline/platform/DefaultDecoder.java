@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -183,8 +183,8 @@ public abstract class DefaultDecoder implements PlatformDecoder {
     int targetWidth = options.outWidth;
     int targetHeight = options.outHeight;
     if (regionToDecode != null) {
-      targetWidth = regionToDecode.width();
-      targetHeight = regionToDecode.height();
+      targetWidth = regionToDecode.width() / options.inSampleSize;
+      targetHeight = regionToDecode.height() / options.inSampleSize;
     }
     int sizeInBytes = getBitmapSize(targetWidth, targetHeight, options);
     final Bitmap bitmapToReuse = mBitmapPool.get(sizeInBytes);

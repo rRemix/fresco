@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -437,13 +437,15 @@ public abstract class AbstractDraweeController<T, INFO> implements
     FrescoSystrace.beginSection("AbstractDraweeController#submitRequest");
     final T closeableImage = getCachedImage();
     if (closeableImage != null) {
+      FrescoSystrace.beginSection("AbstractDraweeController#submitRequest->cache");
       mDataSource = null;
       mIsRequestSubmitted = true;
       mHasFetchFailed = false;
       mEventTracker.recordEvent(Event.ON_SUBMIT_CACHE_HIT);
       getControllerListener().onSubmit(mId, mCallerContext);
       onImageLoadedFromCacheImmediately(mId, closeableImage);
-      onNewResultInternal(mId, mDataSource, closeableImage, 1.0f, true, true);
+      onNewResultInternal(mId, mDataSource, closeableImage, 1.0f, true, true, true);
+      FrescoSystrace.endSection();
       FrescoSystrace.endSection();
       return;
     }
@@ -470,18 +472,22 @@ public abstract class AbstractDraweeController<T, INFO> implements
             // isFinished must be obtained before image, otherwise we might set intermediate result
             // as final image.
             boolean isFinished = dataSource.isFinished();
+            boolean hasMultipleResults = dataSource.hasMultipleResults();
             float progress = dataSource.getProgress();
             T image = dataSource.getResult();
             if (image != null) {
-              onNewResultInternal(id, dataSource, image, progress, isFinished, wasImmediate);
+              onNewResultInternal(
+                  id, dataSource, image, progress, isFinished, wasImmediate, hasMultipleResults);
             } else if (isFinished) {
               onFailureInternal(id, dataSource, new NullPointerException(), /* isFinished */ true);
             }
           }
+
           @Override
           public void onFailureImpl(DataSource<T> dataSource) {
             onFailureInternal(id, dataSource, dataSource.getFailureCause(), /* isFinished */ true);
           }
+
           @Override
           public void onProgressUpdate(DataSource<T> dataSource) {
             boolean isFinished = dataSource.isFinished();
@@ -499,7 +505,8 @@ public abstract class AbstractDraweeController<T, INFO> implements
       @Nullable T image,
       float progress,
       boolean isFinished,
-      boolean wasImmediate) {
+      boolean wasImmediate,
+      boolean deliverTempResult) {
     try {
       FrescoSystrace.beginSection("AbstractDraweeController#onNewResultInternal");
       // ignore late callbacks (data source that returned the new result is not the one we expected)
@@ -530,6 +537,10 @@ public abstract class AbstractDraweeController<T, INFO> implements
         if (isFinished) {
           logMessageAndImage("set_final_result @ onNewResult", image);
           mDataSource = null;
+          mSettableDraweeHierarchy.setImage(drawable, 1f, wasImmediate);
+          getControllerListener().onFinalImageSet(id, getImageInfo(image), getAnimatable());
+        } else if (deliverTempResult) {
+          logMessageAndImage("set_temporary_result @ onNewResult", image);
           mSettableDraweeHierarchy.setImage(drawable, 1f, wasImmediate);
           getControllerListener().onFinalImageSet(id, getImageInfo(image), getAnimatable());
           // IMPORTANT: do not execute any instance-specific code after this point

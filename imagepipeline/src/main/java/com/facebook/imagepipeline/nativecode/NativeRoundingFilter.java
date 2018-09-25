@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -37,6 +37,16 @@ public class NativeRoundingFilter {
     nativeToCircleFilter(bitmap, antiAliased);
   }
 
+  public static void toCircleWithBorder(
+      Bitmap bitmap, int colorARGB, int borderWidthPx, boolean antiAliased) {
+    Preconditions.checkNotNull(bitmap);
+    nativeToCircleWithBorderFilter(bitmap, colorARGB, borderWidthPx, antiAliased);
+  }
+
   @DoNotStrip
   private static native void nativeToCircleFilter(Bitmap bitmap, boolean antiAliased);
+
+  @DoNotStrip
+  private static native void nativeToCircleWithBorderFilter(
+      Bitmap bitmap, int colorARGB, int borderWidthPx, boolean antiAliased);
 }

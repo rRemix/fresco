@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -245,6 +245,14 @@ public class DraweeHolder<DH extends DraweeHierarchy>
     return mHierarchy == null ? null : mHierarchy.getTopLevelDrawable();
   }
 
+  /**
+   * Returns whether currently set controller is valid: not null and attached to the hierarchy that
+   * is held by the holder
+   */
+  public boolean isControllerValid() {
+    return mController != null && mController.getHierarchy() == mHierarchy;
+  }
+
   protected DraweeEventTracker getDraweeEventTracker() {
     return mEventTracker;
   }
@@ -288,9 +296,5 @@ public class DraweeHolder<DH extends DraweeHierarchy>
         .add("drawableVisible", mIsVisible)
         .add("events", mEventTracker.toString())
         .toString();
-  }
-
-  private boolean isControllerValid() {
-    return mController != null && mController.getHierarchy() == mHierarchy;
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -366,16 +366,21 @@ public class PipelineDraweeController
 
   @Override
   protected CloseableReference<CloseableImage> getCachedImage() {
-    if (mMemoryCache == null || mCacheKey == null) {
-      return null;
+    FrescoSystrace.beginSection("PipelineDraweeController#getCachedImage");
+    try {
+      if (mMemoryCache == null || mCacheKey == null) {
+        return null;
+      }
+      // We get the CacheKey
+      CloseableReference<CloseableImage> closeableImage = mMemoryCache.get(mCacheKey);
+      if (closeableImage != null && !closeableImage.get().getQualityInfo().isOfFullQuality()) {
+        closeableImage.close();
+        return null;
+      }
+      return closeableImage;
+    } finally {
+      FrescoSystrace.endSection();
     }
-    // We get the CacheKey
-    CloseableReference<CloseableImage> closeableImage = mMemoryCache.get(mCacheKey);
-    if (closeableImage != null && !closeableImage.get().getQualityInfo().isOfFullQuality()) {
-      closeableImage.close();
-      return null;
-    }
-    return closeableImage;
   }
 
   @Override
