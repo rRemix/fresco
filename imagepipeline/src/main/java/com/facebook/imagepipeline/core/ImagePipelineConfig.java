@@ -37,7 +37,6 @@ import com.facebook.imagepipeline.decoder.SimpleProgressiveJpegConfig;
 import com.facebook.imagepipeline.listener.RequestListener;
 import com.facebook.imagepipeline.memory.PoolConfig;
 import com.facebook.imagepipeline.memory.PoolFactory;
-import com.facebook.imagepipeline.nativecode.NativeJpegTranscoderFactory;
 import com.facebook.imagepipeline.producers.HttpUrlConnectionNetworkFetcher;
 import com.facebook.imagepipeline.producers.NetworkFetcher;
 import com.facebook.imagepipeline.systrace.FrescoSystrace;
@@ -79,6 +78,7 @@ public class ImagePipelineConfig {
   private final ImageCacheStatsTracker mImageCacheStatsTracker;
   @Nullable private final ImageDecoder mImageDecoder;
   @Nullable private final ImageTranscoderFactory mImageTranscoderFactory;
+  @Nullable @ImageTranscoderType private final Integer mImageTranscoderType;
   private final Supplier<Boolean> mIsPrefetchEnabledSupplier;
   private final DiskCacheConfig mMainDiskCacheConfig;
   private final MemoryTrimmableRegistry mMemoryTrimmableRegistry;
@@ -99,93 +99,99 @@ public class ImagePipelineConfig {
       sDefaultImageRequestConfig = new DefaultImageRequestConfig();
 
   private ImagePipelineConfig(Builder builder) {
-    FrescoSystrace.beginSection("ImagePipelineConfig()");
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.beginSection("ImagePipelineConfig()");
+    }
     // We have to build experiments before the rest
     mImagePipelineExperiments = builder.mExperimentsBuilder.build();
     mBitmapMemoryCacheParamsSupplier =
-        builder.mBitmapMemoryCacheParamsSupplier == null ?
-            new DefaultBitmapMemoryCacheParamsSupplier(
-                (ActivityManager) builder.mContext.getSystemService(Context.ACTIVITY_SERVICE)) :
-            builder.mBitmapMemoryCacheParamsSupplier;
+        builder.mBitmapMemoryCacheParamsSupplier == null
+            ? new DefaultBitmapMemoryCacheParamsSupplier(
+                (ActivityManager) builder.mContext.getSystemService(Context.ACTIVITY_SERVICE))
+            : builder.mBitmapMemoryCacheParamsSupplier;
     mBitmapMemoryCacheTrimStrategy =
-        builder.mBitmapMemoryCacheTrimStrategy == null ?
-            new BitmapMemoryCacheTrimStrategy() :
-            builder.mBitmapMemoryCacheTrimStrategy;
-    mBitmapConfig =
-        builder.mBitmapConfig == null ?
-            Bitmap.Config.ARGB_8888 :
-            builder.mBitmapConfig;
+        builder.mBitmapMemoryCacheTrimStrategy == null
+            ? new BitmapMemoryCacheTrimStrategy()
+            : builder.mBitmapMemoryCacheTrimStrategy;
+    mBitmapConfig = builder.mBitmapConfig == null ? Bitmap.Config.ARGB_8888 : builder.mBitmapConfig;
     mCacheKeyFactory =
-        builder.mCacheKeyFactory == null ?
-            DefaultCacheKeyFactory.getInstance() :
-            builder.mCacheKeyFactory;
+        builder.mCacheKeyFactory == null
+            ? DefaultCacheKeyFactory.getInstance()
+            : builder.mCacheKeyFactory;
     mContext = Preconditions.checkNotNull(builder.mContext);
-    mFileCacheFactory = builder.mFileCacheFactory == null ?
-        new DiskStorageCacheFactory(new DynamicDefaultDiskStorageFactory()) :
-        builder.mFileCacheFactory;
+    mFileCacheFactory =
+        builder.mFileCacheFactory == null
+            ? new DiskStorageCacheFactory(new DynamicDefaultDiskStorageFactory())
+            : builder.mFileCacheFactory;
     mDownsampleEnabled = builder.mDownsampleEnabled;
     mEncodedMemoryCacheParamsSupplier =
-        builder.mEncodedMemoryCacheParamsSupplier == null ?
-            new DefaultEncodedMemoryCacheParamsSupplier() :
-            builder.mEncodedMemoryCacheParamsSupplier;
+        builder.mEncodedMemoryCacheParamsSupplier == null
+            ? new DefaultEncodedMemoryCacheParamsSupplier()
+            : builder.mEncodedMemoryCacheParamsSupplier;
     mImageCacheStatsTracker =
-        builder.mImageCacheStatsTracker == null ?
-            NoOpImageCacheStatsTracker.getInstance() :
-            builder.mImageCacheStatsTracker;
+        builder.mImageCacheStatsTracker == null
+            ? NoOpImageCacheStatsTracker.getInstance()
+            : builder.mImageCacheStatsTracker;
     mImageDecoder = builder.mImageDecoder;
-    mImageTranscoderFactory = getImageTranscoderFactory(builder, mImagePipelineExperiments);
+    mImageTranscoderFactory = getImageTranscoderFactory(builder);
+    mImageTranscoderType = builder.mImageTranscoderType;
     mIsPrefetchEnabledSupplier =
-        builder.mIsPrefetchEnabledSupplier == null ?
-            new Supplier<Boolean>() {
+        builder.mIsPrefetchEnabledSupplier == null
+            ? new Supplier<Boolean>() {
               @Override
               public Boolean get() {
                 return true;
               }
-            } :
-            builder.mIsPrefetchEnabledSupplier;
+            }
+            : builder.mIsPrefetchEnabledSupplier;
     mMainDiskCacheConfig =
-        builder.mMainDiskCacheConfig == null ?
-            getDefaultMainDiskCacheConfig(builder.mContext) :
-            builder.mMainDiskCacheConfig;
+        builder.mMainDiskCacheConfig == null
+            ? getDefaultMainDiskCacheConfig(builder.mContext)
+            : builder.mMainDiskCacheConfig;
     mMemoryTrimmableRegistry =
-        builder.mMemoryTrimmableRegistry == null ?
-            NoOpMemoryTrimmableRegistry.getInstance() :
-            builder.mMemoryTrimmableRegistry;
+        builder.mMemoryTrimmableRegistry == null
+            ? NoOpMemoryTrimmableRegistry.getInstance()
+            : builder.mMemoryTrimmableRegistry;
     mMemoryChunkType = getMemoryChunkType(builder, mImagePipelineExperiments);
     mHttpNetworkTimeout =
         builder.mHttpConnectionTimeout < 0
             ? HttpUrlConnectionNetworkFetcher.HTTP_DEFAULT_TIMEOUT
             : builder.mHttpConnectionTimeout;
-    FrescoSystrace.beginSection("ImagePipelineConfig->mNetworkFetcher");
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.beginSection("ImagePipelineConfig->mNetworkFetcher");
+    }
     mNetworkFetcher =
         builder.mNetworkFetcher == null
             ? new HttpUrlConnectionNetworkFetcher(mHttpNetworkTimeout)
             : builder.mNetworkFetcher;
-    FrescoSystrace.endSection();
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.endSection();
+    }
     mPlatformBitmapFactory = builder.mPlatformBitmapFactory;
     mPoolFactory =
-        builder.mPoolFactory == null ?
-            new PoolFactory(PoolConfig.newBuilder().build()) :
-            builder.mPoolFactory;
+        builder.mPoolFactory == null
+            ? new PoolFactory(PoolConfig.newBuilder().build())
+            : builder.mPoolFactory;
     mProgressiveJpegConfig =
-        builder.mProgressiveJpegConfig == null ?
-            new SimpleProgressiveJpegConfig() :
-            builder.mProgressiveJpegConfig;
+        builder.mProgressiveJpegConfig == null
+            ? new SimpleProgressiveJpegConfig()
+            : builder.mProgressiveJpegConfig;
     mRequestListeners =
-        builder.mRequestListeners == null ?
-            new HashSet<RequestListener>() :
-            builder.mRequestListeners;
+        builder.mRequestListeners == null
+            ? new HashSet<RequestListener>()
+            : builder.mRequestListeners;
     mResizeAndRotateEnabledForNetwork = builder.mResizeAndRotateEnabledForNetwork;
     mSmallImageDiskCacheConfig =
-        builder.mSmallImageDiskCacheConfig == null ?
-            mMainDiskCacheConfig :
-            builder.mSmallImageDiskCacheConfig;
+        builder.mSmallImageDiskCacheConfig == null
+            ? mMainDiskCacheConfig
+            : builder.mSmallImageDiskCacheConfig;
     mImageDecoderConfig = builder.mImageDecoderConfig;
     // Below this comment can't be built in alphabetical order, because of dependencies
     int numCpuBoundThreads = mPoolFactory.getFlexByteArrayPoolMaxNumThreads();
     mExecutorSupplier =
-        builder.mExecutorSupplier == null ?
-            new DefaultExecutorSupplier(numCpuBoundThreads) : builder.mExecutorSupplier;
+        builder.mExecutorSupplier == null
+            ? new DefaultExecutorSupplier(numCpuBoundThreads)
+            : builder.mExecutorSupplier;
     mDiskCacheEnabled = builder.mDiskCacheEnabled;
     // Here we manage the WebpBitmapFactory implementation if any
     WebpBitmapFactory webpBitmapFactory = mImagePipelineExperiments.getWebpBitmapFactory();
@@ -194,8 +200,8 @@ public class ImagePipelineConfig {
       setWebpBitmapFactory(webpBitmapFactory, mImagePipelineExperiments, bitmapCreator);
     } else {
       // We check using introspection only if the experiment is enabled
-      if (mImagePipelineExperiments.isWebpSupportEnabled() &&
-          WebpSupportStatus.sIsWebpSupportRequired) {
+      if (mImagePipelineExperiments.isWebpSupportEnabled()
+          && WebpSupportStatus.sIsWebpSupportRequired) {
         webpBitmapFactory = WebpSupportStatus.loadWebpBitmapFactoryIfExists();
         if (webpBitmapFactory != null) {
           BitmapCreator bitmapCreator = new HoneycombBitmapCreator(getPoolFactory());
@@ -203,7 +209,9 @@ public class ImagePipelineConfig {
         }
       }
     }
-    FrescoSystrace.endSection();
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.endSection();
+    }
   }
 
   private static void setWebpBitmapFactory(
@@ -223,10 +231,14 @@ public class ImagePipelineConfig {
 
   private static DiskCacheConfig getDefaultMainDiskCacheConfig(final Context context) {
     try {
-      FrescoSystrace.beginSection("DiskCacheConfig.getDefaultMainDiskCacheConfig");
+      if (FrescoSystrace.isTracing()) {
+        FrescoSystrace.beginSection("DiskCacheConfig.getDefaultMainDiskCacheConfig");
+      }
       return DiskCacheConfig.newBuilder(context).build();
     } finally {
-      FrescoSystrace.endSection();
+      if (FrescoSystrace.isTracing()) {
+        FrescoSystrace.endSection();
+      }
     }
   }
 
@@ -293,6 +305,12 @@ public class ImagePipelineConfig {
     return mImageTranscoderFactory;
   }
 
+  @Nullable
+  @ImageTranscoderType
+  public Integer getImageTranscoderType() {
+    return mImageTranscoderType;
+  }
+
   public Supplier<Boolean> getIsPrefetchEnabledSupplier() {
     return mIsPrefetchEnabledSupplier;
   }
@@ -353,17 +371,15 @@ public class ImagePipelineConfig {
   }
 
   @Nullable
-  private static ImageTranscoderFactory getImageTranscoderFactory(
-      final Builder builder, final ImagePipelineExperiments imagePipelineExperiments) {
+  private static ImageTranscoderFactory getImageTranscoderFactory(final Builder builder) {
+    if (builder.mImageTranscoderFactory != null && builder.mImageTranscoderType != null) {
+      throw new IllegalStateException(
+          "You can't define a custom ImageTranscoderFactory and provide an ImageTranscoderType");
+    }
     if (builder.mImageTranscoderFactory != null) {
       return builder.mImageTranscoderFactory;
-    } else if (imagePipelineExperiments.isNativeCodeDisabled()) {
-      // This member will be constructed by ImagePipelineFactory
-      return null;
     } else {
-      return new NativeJpegTranscoderFactory(
-          imagePipelineExperiments.getMaxBitmapSize(),
-          imagePipelineExperiments.getUseDownsamplingRatioForResizing());
+      return null; // This member will be constructed by ImagePipelineFactory
     }
   }
 
@@ -411,6 +427,7 @@ public class ImagePipelineConfig {
     private ImageCacheStatsTracker mImageCacheStatsTracker;
     private ImageDecoder mImageDecoder;
     private ImageTranscoderFactory mImageTranscoderFactory;
+    @Nullable @ImageTranscoderType private Integer mImageTranscoderType = null;
     private Supplier<Boolean> mIsPrefetchEnabledSupplier;
     private DiskCacheConfig mMainDiskCacheConfig;
     private MemoryTrimmableRegistry mMemoryTrimmableRegistry;
@@ -504,6 +521,17 @@ public class ImagePipelineConfig {
 
     public Builder setImageDecoder(ImageDecoder imageDecoder) {
       mImageDecoder = imageDecoder;
+      return this;
+    }
+
+    @Nullable
+    @ImageTranscoderType
+    public Integer getImageTranscoderType() {
+      return mImageTranscoderType;
+    }
+
+    public Builder setImageTranscoderType(@ImageTranscoderType int imageTranscoderType) {
+      mImageTranscoderType = imageTranscoderType;
       return this;
     }
 

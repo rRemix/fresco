@@ -9,22 +9,33 @@ package com.facebook.imagepipeline.memory;
 import android.graphics.Bitmap;
 import com.facebook.common.internal.VisibleForTesting;
 import com.facebook.common.memory.MemoryTrimType;
+import com.facebook.common.memory.MemoryTrimmableRegistry;
+import javax.annotation.Nullable;
 
 public class LruBitmapPool implements BitmapPool {
 
   protected final PoolBackend<Bitmap> mStrategy = new BitmapPoolBackend();
-  private final int mMaxSize;
+  private final int mMaxPoolSize;
+  private int mMaxBitmapSize;
   private final PoolStatsTracker mPoolStatsTracker;
   private int mCurrentSize;
 
-  public LruBitmapPool(int maxSize, PoolStatsTracker poolStatsTracker) {
-    mMaxSize = maxSize;
+  public LruBitmapPool(
+      int maxPoolSize,
+      int maxBitmapSize,
+      PoolStatsTracker poolStatsTracker,
+      @Nullable MemoryTrimmableRegistry memoryTrimmableRegistry) {
+    mMaxPoolSize = maxPoolSize;
+    mMaxBitmapSize = maxBitmapSize;
     mPoolStatsTracker = poolStatsTracker;
+    if (memoryTrimmableRegistry != null) {
+      memoryTrimmableRegistry.registerMemoryTrimmable(this);
+    }
   }
 
   @Override
   public void trim(MemoryTrimType trimType) {
-    trimTo((int) (mMaxSize * (1f - trimType.getSuggestedTrimRatio())));
+    trimTo((int) (mMaxPoolSize * (1f - trimType.getSuggestedTrimRatio())));
   }
 
   private synchronized void trimTo(int maxSize) {
@@ -41,8 +52,11 @@ public class LruBitmapPool implements BitmapPool {
   }
 
   @Override
-  public synchronized Bitmap get(int size) {
-    Bitmap cached = mStrategy.get(size);
+  public synchronized Bitmap get(final int size) {
+    if (mCurrentSize > mMaxPoolSize) {
+      trimTo(mMaxPoolSize);
+    }
+    final Bitmap cached = mStrategy.get(size);
     if (cached != null) {
       final int reusedSize = mStrategy.getSize(cached);
       mCurrentSize -= reusedSize;
@@ -59,13 +73,14 @@ public class LruBitmapPool implements BitmapPool {
   }
 
   @Override
-  public synchronized void release(Bitmap value) {
+  public void release(final Bitmap value) {
     final int size = mStrategy.getSize(value);
-    mPoolStatsTracker.onValueRelease(size);
-    mStrategy.put(value);
-    mCurrentSize += size;
-    if (mCurrentSize > mMaxSize) {
-      trimTo(mMaxSize);
+    if (size <= mMaxBitmapSize) {
+      mPoolStatsTracker.onValueRelease(size);
+      mStrategy.put(value);
+      synchronized (this) {
+        mCurrentSize += size;
+      }
     }
   }
 }

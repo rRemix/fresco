@@ -106,6 +106,8 @@ public class ImagePipelineTest {
     when(mImageRequest.getPriority()).thenReturn(Priority.HIGH);
     when(mImageRequest.getLowestPermittedRequestLevel())
         .thenReturn(ImageRequest.RequestLevel.FULL_FETCH);
+    when(mImageRequest.shouldDecodePrefetches())
+            .thenReturn(null);
   }
 
   @Test
@@ -488,6 +490,13 @@ public class ImagePipelineTest {
     mImagePipeline.clearDiskCaches();
     verify(mMainDiskStorageCache).clearAll();
     verify(mSmallImageDiskStorageCache).clearAll();
+  }
+
+  @Test
+  public void testDiskCachesSize() {
+    mImagePipeline.getUsedDiskCacheSize();
+    verify(mMainDiskStorageCache).getSize();
+    verify(mSmallImageDiskStorageCache).getSize();
   }
 
   @Test

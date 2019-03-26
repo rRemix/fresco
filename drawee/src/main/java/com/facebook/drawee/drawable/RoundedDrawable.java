@@ -16,9 +16,9 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import com.facebook.common.internal.Preconditions;
 import com.facebook.common.internal.VisibleForTesting;
 import com.facebook.imagepipeline.systrace.FrescoSystrace;
@@ -69,6 +69,7 @@ public abstract class RoundedDrawable extends Drawable
   @VisibleForTesting final Matrix mTransform = new Matrix();
   private float mPadding = 0;
   private boolean mScaleDownInsideBorders = false;
+  private boolean mPaintFilterBitmap = false;
 
   private boolean mIsPathDirty = true;
 
@@ -199,6 +200,29 @@ public abstract class RoundedDrawable extends Drawable
   @Override
   public boolean getScaleDownInsideBorders() {
     return mScaleDownInsideBorders;
+  }
+
+  /**
+   * Sets FILTER_BITMAP_FLAG flag to Paint. {@link android.graphics.Paint#FILTER_BITMAP_FLAG}
+   *
+   * <p>This should generally be on when drawing bitmaps, unless performance-bound (rendering to software
+   * canvas) or preferring pixelation artifacts to blurriness when scaling
+   * significantly.
+   *
+   * @param paintFilterBitmap whether to set FILTER_BITMAP_FLAG flag to Paint.
+   */
+  @Override
+  public void setPaintFilterBitmap(boolean paintFilterBitmap) {
+    if (mPaintFilterBitmap != paintFilterBitmap) {
+      mPaintFilterBitmap = paintFilterBitmap;
+      invalidateSelf();
+    }
+  }
+
+  /** Gets whether to set FILTER_BITMAP_FLAG flag to Paint. */
+  @Override
+  public boolean getPaintFilterBitmap() {
+    return mPaintFilterBitmap;
   }
 
   /** TransformAwareDrawable method */
@@ -374,8 +398,12 @@ public abstract class RoundedDrawable extends Drawable
 
   @Override
   public void draw(@NonNull Canvas canvas) {
-    FrescoSystrace.beginSection("RoundedDrawable#draw");
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.beginSection("RoundedDrawable#draw");
+    }
     mDelegate.draw(canvas);
-    FrescoSystrace.endSection();
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.endSection();
+    }
   }
 }

@@ -147,6 +147,14 @@
     <li class="api apilevel-">
   <a href="../../../../com/facebook/animated/gif/package-summary.html">com.facebook.animated.gif</a></li>
     <li class="api apilevel-">
+  <a href="../../../../com/facebook/animated/giflite/package-summary.html">com.facebook.animated.giflite</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../com/facebook/animated/giflite/decoder/package-summary.html">com.facebook.animated.giflite.decoder</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../com/facebook/animated/giflite/draw/package-summary.html">com.facebook.animated.giflite.draw</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../com/facebook/animated/giflite/drawable/package-summary.html">com.facebook.animated.giflite.drawable</a></li>
+    <li class="api apilevel-">
   <a href="../../../../com/facebook/animated/webp/package-summary.html">com.facebook.animated.webp</a></li>
     <li class="api apilevel-">
   <a href="../../../../com/facebook/binaryresource/package-summary.html">com.facebook.binaryresource</a></li>
@@ -190,6 +198,8 @@
   <a href="../../../../com/facebook/drawable/base/package-summary.html">com.facebook.drawable.base</a></li>
     <li class="api apilevel-">
   <a href="../../../../com/facebook/drawee/backends/pipeline/package-summary.html">com.facebook.drawee.backends.pipeline</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../com/facebook/drawee/backends/pipeline/debug/package-summary.html">com.facebook.drawee.backends.pipeline.debug</a></li>
     <li class="api apilevel-">
   <a href="../../../../com/facebook/drawee/backends/pipeline/info/package-summary.html">com.facebook.drawee.backends.pipeline.info</a></li>
     <li class="api apilevel-">
@@ -259,9 +269,13 @@
     <li class="api apilevel-">
   <a href="../../../../com/facebook/imagepipeline/datasource/package-summary.html">com.facebook.imagepipeline.datasource</a></li>
     <li class="api apilevel-">
+  <a href="../../../../com/facebook/imagepipeline/debug/package-summary.html">com.facebook.imagepipeline.debug</a></li>
+    <li class="api apilevel-">
   <a href="../../../../com/facebook/imagepipeline/decoder/package-summary.html">com.facebook.imagepipeline.decoder</a></li>
     <li class="api apilevel-">
   <a href="../../../../com/facebook/imagepipeline/drawable/package-summary.html">com.facebook.imagepipeline.drawable</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../com/facebook/imagepipeline/filter/package-summary.html">com.facebook.imagepipeline.filter</a></li>
     <li class="api apilevel-">
   <a href="../../../../com/facebook/imagepipeline/image/package-summary.html">com.facebook.imagepipeline.image</a></li>
     <li class="api apilevel-">
@@ -280,6 +294,10 @@
   <a href="../../../../com/facebook/imagepipeline/request/package-summary.html">com.facebook.imagepipeline.request</a></li>
     <li class="api apilevel-">
   <a href="../../../../com/facebook/imagepipeline/systrace/package-summary.html">com.facebook.imagepipeline.systrace</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../com/facebook/imagepipeline/transcoder/package-summary.html">com.facebook.imagepipeline.transcoder</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../com/facebook/imagepipeline/transformation/package-summary.html">com.facebook.imagepipeline.transformation</a></li>
     <li class="api apilevel-">
   <a href="../../../../com/facebook/imageutils/package-summary.html">com.facebook.imageutils</a></li>
     <li class="api apilevel-">
@@ -320,6 +338,12 @@
       </ul>
     </li>
               
+    <li><h2>Annotations</h2>
+      <ul>
+          <li class="api apilevel-"><a href="../../../../com/facebook/imagepipeline/core/ImageTranscoderType.html">ImageTranscoderType</a></li>
+          <li class="api apilevel-"><a href="../../../../com/facebook/imagepipeline/core/MemoryChunkType.html">MemoryChunkType</a></li>
+      </ul>
+    </li>
               
               
               
@@ -820,10 +844,44 @@ Summary:
             
             
             
+            String
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../com/facebook/imagepipeline/core/ImagePipeline.html#generateUniqueFutureId()">generateUniqueFutureId</a></span>()
+        
+        <div class="jd-descrdiv">Generates unique id for RequestFuture.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
             <a href="../../../../com/facebook/imagepipeline/cache/MemoryCache.html">MemoryCache</a>&lt;<a href="../../../../com/facebook/cache/common/CacheKey.html">CacheKey</a>,&nbsp;<a href="../../../../com/facebook/imagepipeline/image/CloseableImage.html">CloseableImage</a>&gt;
         </td>
         <td class="jd-linkcol" width="100%">
         <span class="sympad"><a href="../../../../com/facebook/imagepipeline/core/ImagePipeline.html#getBitmapMemoryCache()">getBitmapMemoryCache</a></span>()
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            <a href="../../../../com/facebook/cache/common/CacheKey.html">CacheKey</a>
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../com/facebook/imagepipeline/core/ImagePipeline.html#getCacheKey(com.facebook.imagepipeline.request.ImageRequest, java.lang.Object)">getCacheKey</a></span>(<a href="../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> imageRequest, Object callerContext)
         
   </td></tr>
 
@@ -852,6 +910,24 @@ Summary:
             
             
             
+            <a href="../../../../com/facebook/common/references/CloseableReference.html">CloseableReference</a>&lt;<a href="../../../../com/facebook/imagepipeline/image/CloseableImage.html">CloseableImage</a>&gt;
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../com/facebook/imagepipeline/core/ImagePipeline.html#getCachedImage(com.facebook.cache.common.CacheKey)">getCachedImage</a></span>(<a href="../../../../com/facebook/cache/common/CacheKey.html">CacheKey</a> cacheKey)
+        
+        <div class="jd-descrdiv">Returns a reference to the cached image</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
             <a href="../../../../com/facebook/common/internal/Supplier.html">Supplier</a>&lt;<a href="../../../../com/facebook/datasource/DataSource.html">DataSource</a>&lt;<a href="../../../../com/facebook/common/references/CloseableReference.html">CloseableReference</a>&lt;<a href="../../../../com/facebook/imagepipeline/image/CloseableImage.html">CloseableImage</a>&gt;&gt;&gt;
         </td>
         <td class="jd-linkcol" width="100%">
@@ -864,7 +940,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -883,7 +959,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -898,6 +974,54 @@ Summary:
         <div class="jd-descrdiv">Returns a DataSource supplier that will on get submit the request for execution and return a
  DataSource representing the pending results of the task.</div>
   
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            <a href="../../../../com/facebook/imagepipeline/core/ProducerSequenceFactory.html">ProducerSequenceFactory</a>
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../com/facebook/imagepipeline/core/ImagePipeline.html#getProducerSequenceFactory()">getProducerSequenceFactory</a></span>()
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            <a href="../../../../com/facebook/imagepipeline/listener/RequestListener.html">RequestListener</a>
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../com/facebook/imagepipeline/core/ImagePipeline.html#getRequestListenerForRequest(com.facebook.imagepipeline.request.ImageRequest, com.facebook.imagepipeline.listener.RequestListener)">getRequestListenerForRequest</a></span>(<a href="../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> imageRequest, <a href="../../../../com/facebook/imagepipeline/listener/RequestListener.html">RequestListener</a> requestListener)
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            boolean
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../com/facebook/imagepipeline/core/ImagePipeline.html#hasCachedImage(com.facebook.cache.common.CacheKey)">hasCachedImage</a></span>(<a href="../../../../com/facebook/cache/common/CacheKey.html">CacheKey</a> cacheKey)
+        
   </td></tr>
 
 
@@ -1141,6 +1265,22 @@ Summary:
         </td>
         <td class="jd-linkcol" width="100%">
         <span class="sympad"><a href="../../../../com/facebook/imagepipeline/core/ImagePipeline.html#resume()">resume</a></span>()
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            &lt;T&gt;
+            <a href="../../../../com/facebook/datasource/DataSource.html">DataSource</a>&lt;<a href="../../../../com/facebook/common/references/CloseableReference.html">CloseableReference</a>&lt;T&gt;&gt;
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../com/facebook/imagepipeline/core/ImagePipeline.html#submitFetchRequest(com.facebook.imagepipeline.producers.Producer<com.facebook.common.references.CloseableReference<T>>, com.facebook.imagepipeline.producers.SettableProducerContext, com.facebook.imagepipeline.listener.RequestListener)">submitFetchRequest</a></span>(<a href="../../../../com/facebook/imagepipeline/producers/Producer.html">Producer</a>&lt;<a href="../../../../com/facebook/common/references/CloseableReference.html">CloseableReference</a>&lt;T&gt;&gt; producerSequence, <a href="../../../../com/facebook/imagepipeline/producers/SettableProducerContext.html">SettableProducerContext</a> settableProducerContext, <a href="../../../../com/facebook/imagepipeline/listener/RequestListener.html">RequestListener</a> requestListener)
         
   </td></tr>
 
@@ -2077,6 +2217,42 @@ From class
 </div>
 
 
+<a id="generateUniqueFutureId()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">generateUniqueFutureId</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Generates unique id for RequestFuture.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>unique id
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
 <a id="getBitmapMemoryCache()"></a>
 
 <div class="jd-details api apilevel-"> 
@@ -2113,6 +2289,41 @@ From class
 </div>
 
 
+<a id="getCacheKey(com.facebook.imagepipeline.request.ImageRequest, java.lang.Object)"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../com/facebook/cache/common/CacheKey.html">CacheKey</a>
+      </span>
+      <span class="sympad">getCacheKey</span>
+      <span class="normal">(<a href="../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> imageRequest, Object callerContext)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li><code><a href="../../../../com/facebook/cache/common/CacheKey.html">CacheKey</a></code> for doing bitmap cache lookups in the pipeline. </li></ul>
+  </div>
+
+    </div>
+</div>
+
+
 <a id="getCacheKeyFactory()"></a>
 
 <div class="jd-details api apilevel-"> 
@@ -2142,6 +2353,42 @@ From class
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Returns</h5>
       <ul class="nolist"><li>The CacheKeyFactory implementation used by ImagePipeline
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<a id="getCachedImage(com.facebook.cache.common.CacheKey)"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../com/facebook/common/references/CloseableReference.html">CloseableReference</a>&lt;<a href="../../../../com/facebook/imagepipeline/image/CloseableImage.html">CloseableImage</a>&gt;
+      </span>
+      <span class="sympad">getCachedImage</span>
+      <span class="normal">(<a href="../../../../com/facebook/cache/common/CacheKey.html">CacheKey</a> cacheKey)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Returns a reference to the cached image</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>a closeable reference or null if image was not present in cache
 </li></ul>
   </div>
 
@@ -2302,6 +2549,99 @@ From class
       <ul class="nolist"><li>a DataSource representing pending results and completion of the request
 </li></ul>
   </div>
+
+    </div>
+</div>
+
+
+<a id="getProducerSequenceFactory()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../com/facebook/imagepipeline/core/ProducerSequenceFactory.html">ProducerSequenceFactory</a>
+      </span>
+      <span class="sympad">getProducerSequenceFactory</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<a id="getRequestListenerForRequest(com.facebook.imagepipeline.request.ImageRequest, com.facebook.imagepipeline.listener.RequestListener)"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../com/facebook/imagepipeline/listener/RequestListener.html">RequestListener</a>
+      </span>
+      <span class="sympad">getRequestListenerForRequest</span>
+      <span class="normal">(<a href="../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> imageRequest, <a href="../../../../com/facebook/imagepipeline/listener/RequestListener.html">RequestListener</a> requestListener)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<a id="hasCachedImage(com.facebook.cache.common.CacheKey)"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        boolean
+      </span>
+      <span class="sympad">hasCachedImage</span>
+      <span class="normal">(<a href="../../../../com/facebook/cache/common/CacheKey.html">CacheKey</a> cacheKey)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
 
     </div>
 </div>
@@ -2893,6 +3233,37 @@ From class
       </span>
       <span class="sympad">resume</span>
       <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<a id="submitFetchRequest(com.facebook.imagepipeline.producers.Producer<com.facebook.common.references.CloseableReference<T>>, com.facebook.imagepipeline.producers.SettableProducerContext, com.facebook.imagepipeline.listener.RequestListener)"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../com/facebook/datasource/DataSource.html">DataSource</a>&lt;<a href="../../../../com/facebook/common/references/CloseableReference.html">CloseableReference</a>&lt;T&gt;&gt;
+      </span>
+      <span class="sympad">submitFetchRequest</span>
+      <span class="normal">(<a href="../../../../com/facebook/imagepipeline/producers/Producer.html">Producer</a>&lt;<a href="../../../../com/facebook/common/references/CloseableReference.html">CloseableReference</a>&lt;T&gt;&gt; producerSequence, <a href="../../../../com/facebook/imagepipeline/producers/SettableProducerContext.html">SettableProducerContext</a> settableProducerContext, <a href="../../../../com/facebook/imagepipeline/listener/RequestListener.html">RequestListener</a> requestListener)</span>
     </h4>
       <div class="api-level">
         <div>

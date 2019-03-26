@@ -14,7 +14,6 @@ package com.facebook.fresco.samples.showcase.misc;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+import androidx.annotation.Nullable;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.fresco.samples.showcase.BaseShowcaseFragment;
 import com.facebook.fresco.samples.showcase.R;
@@ -31,7 +31,7 @@ import com.facebook.fresco.samples.showcase.R;
  */
 public class WelcomeFragment extends BaseShowcaseFragment {
 
-  private static final String URL_DOCUMENTATION = "http://frescolib.org/";
+  private static final String URL_DOCUMENTATION = "https://frescolib.org/";
   private static final String URL_GITHUB = "https://github.com/facebook/fresco";
 
   @Nullable

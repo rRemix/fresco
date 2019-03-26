@@ -27,6 +27,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicBoolean;
+import javax.annotation.Nullable;
 
 /**
  * BufferedDiskCache provides get and put operations to take care of scheduling disk-cache
@@ -129,14 +130,18 @@ public class BufferedDiskCache {
    */
   public Task<EncodedImage> get(CacheKey key, AtomicBoolean isCancelled) {
     try {
-      FrescoSystrace.beginSection("BufferedDiskCache#get");
+      if (FrescoSystrace.isTracing()) {
+        FrescoSystrace.beginSection("BufferedDiskCache#get");
+      }
       final EncodedImage pinnedImage = mStagingArea.get(key);
       if (pinnedImage != null) {
         return foundPinnedImage(key, pinnedImage);
       }
       return getAsync(key, isCancelled);
     } finally {
-      FrescoSystrace.endSection();
+      if (FrescoSystrace.isTracing()) {
+        FrescoSystrace.endSection();
+      }
     }
   }
 
@@ -169,9 +174,11 @@ public class BufferedDiskCache {
       return Task.call(
           new Callable<EncodedImage>() {
             @Override
-            public EncodedImage call() throws Exception {
+            public @Nullable EncodedImage call() throws Exception {
               try {
-                FrescoSystrace.beginSection("BufferedDiskCache#getAsync");
+                if (FrescoSystrace.isTracing()) {
+                  FrescoSystrace.beginSection("BufferedDiskCache#getAsync");
+                }
                 if (isCancelled.get()) {
                   throw new CancellationException();
                 }
@@ -185,6 +192,9 @@ public class BufferedDiskCache {
 
                   try {
                     final PooledByteBuffer buffer = readFromDiskCache(key);
+                    if (buffer == null) {
+                      return null;
+                    }
                     CloseableReference<PooledByteBuffer> ref = CloseableReference.of(buffer);
                     try {
                       result = new EncodedImage(ref);
@@ -206,7 +216,9 @@ public class BufferedDiskCache {
                   return result;
                 }
               } finally {
-                FrescoSystrace.endSection();
+                if (FrescoSystrace.isTracing()) {
+                  FrescoSystrace.endSection();
+                }
               }
             }
           },
@@ -231,7 +243,9 @@ public class BufferedDiskCache {
       final CacheKey key,
       EncodedImage encodedImage) {
     try {
-      FrescoSystrace.beginSection("BufferedDiskCache#put");
+      if (FrescoSystrace.isTracing()) {
+        FrescoSystrace.beginSection("BufferedDiskCache#put");
+      }
       Preconditions.checkNotNull(key);
       Preconditions.checkArgument(EncodedImage.isValid(encodedImage));
 
@@ -249,12 +263,16 @@ public class BufferedDiskCache {
               @Override
               public void run() {
                 try {
-                  FrescoSystrace.beginSection("BufferedDiskCache#putAsync");
+                  if (FrescoSystrace.isTracing()) {
+                    FrescoSystrace.beginSection("BufferedDiskCache#putAsync");
+                  }
                   writeToDiskCache(key, finalEncodedImage);
                 } finally {
                   mStagingArea.remove(key, finalEncodedImage);
                   EncodedImage.closeSafely(finalEncodedImage);
-                  FrescoSystrace.endSection();
+                  if (FrescoSystrace.isTracing()) {
+                    FrescoSystrace.endSection();
+                  }
                 }
               }
             });
@@ -266,7 +284,9 @@ public class BufferedDiskCache {
         EncodedImage.closeSafely(finalEncodedImage);
       }
     } finally {
-      FrescoSystrace.endSection();
+      if (FrescoSystrace.isTracing()) {
+        FrescoSystrace.endSection();
+      }
     }
   }
 
@@ -282,11 +302,15 @@ public class BufferedDiskCache {
             @Override
             public Void call() throws Exception {
               try {
-                FrescoSystrace.beginSection("BufferedDiskCache#remove");
+                if (FrescoSystrace.isTracing()) {
+                  FrescoSystrace.beginSection("BufferedDiskCache#remove");
+                }
                 mStagingArea.remove(key);
                 mFileCache.remove(key);
               } finally {
-                FrescoSystrace.endSection();
+                if (FrescoSystrace.isTracing()) {
+                  FrescoSystrace.endSection();
+                }
               }
               return null;
             }
@@ -324,16 +348,18 @@ public class BufferedDiskCache {
     }
   }
 
+  public long getSize() {
+    return mFileCache.getSize();
+  }
+
   private Task<EncodedImage> foundPinnedImage(CacheKey key, EncodedImage pinnedImage) {
     FLog.v(TAG, "Found image for %s in staging area", key.getUriString());
     mImageCacheStatsTracker.onStagingAreaHit(key);
     return Task.forResult(pinnedImage);
   }
 
-  /**
-   * Performs disk cache read. In case of any exception null is returned.
-   */
-  private PooledByteBuffer readFromDiskCache(final CacheKey key) throws IOException {
+  /** Performs disk cache read. In case of any exception null is returned. */
+  private @Nullable PooledByteBuffer readFromDiskCache(final CacheKey key) throws IOException {
     try {
       FLog.v(TAG, "Disk cache read for %s", key.getUriString());
 

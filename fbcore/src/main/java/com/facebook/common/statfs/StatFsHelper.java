@@ -39,15 +39,21 @@ public class StatFsHelper {
     EXTERNAL
   };
 
+  /* See definition here: https://fburl.com/wut/atm6yg8o */
+  public static final int DEFAULT_DISK_YELLOW_LEVEL_IN_MB = 400;
+
+  public static final long DEFAULT_DISK_YELLOW_LEVEL_IN_BYTES =
+      DEFAULT_DISK_YELLOW_LEVEL_IN_MB * 1024 * 1024;
+
   private static StatFsHelper sStatsFsHelper;
 
   // Time interval for updating disk information
   private static final long RESTAT_INTERVAL_MS = TimeUnit.MINUTES.toMillis(2);
 
-  private volatile StatFs mInternalStatFs = null;
+  private volatile @Nullable StatFs mInternalStatFs = null;
   private volatile File mInternalPath;
 
-  private volatile StatFs mExternalStatFs = null;
+  private volatile @Nullable StatFs mExternalStatFs = null;
   private volatile File mExternalPath;
 
   @GuardedBy("lock")
@@ -250,7 +256,7 @@ public class StatFsHelper {
    * directory does not exist or the StatFs restat() or constructor fails (throws), a null StatFs
    * object is returned.
    */
-  private StatFs updateStatsHelper(@Nullable StatFs statfs, @Nullable File dir) {
+  private @Nullable StatFs updateStatsHelper(@Nullable StatFs statfs, @Nullable File dir) {
     if(dir == null || !dir.exists()) {
       // The path does not exist, do not track stats for it.
       return null;

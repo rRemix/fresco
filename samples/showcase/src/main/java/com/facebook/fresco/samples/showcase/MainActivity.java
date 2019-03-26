@@ -16,19 +16,17 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import com.facebook.fresco.samples.showcase.drawee.DraweeHierarchyFragment;
 import com.facebook.fresco.samples.showcase.drawee.DraweeMediaPickerFragment;
 import com.facebook.fresco.samples.showcase.drawee.DraweeRecyclerViewFragment;
@@ -58,6 +56,10 @@ import com.facebook.fresco.samples.showcase.imagepipeline.PartialRequestFragment
 import com.facebook.fresco.samples.showcase.misc.ImageUriProvider;
 import com.facebook.fresco.samples.showcase.misc.WelcomeFragment;
 import com.facebook.fresco.samples.showcase.settings.SettingsFragment;
+import com.facebook.fresco.samples.showcase.vito.FrescoVitoLithoSectionsFragment;
+import com.facebook.fresco.samples.showcase.vito.FrescoVitoLithoSimpleFragment;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -228,6 +230,14 @@ public class MainActivity extends AppCompatActivity
         break;
       case R.id.nav_format_datauri:
         fragment = new ImageFormatDataUriFragment();
+        break;
+
+        // Experimental Fresco Vito samples
+      case R.id.nav_vito_litho_simple:
+        fragment = new FrescoVitoLithoSimpleFragment();
+        break;
+      case R.id.nav_vito_litho_sections:
+        fragment = new FrescoVitoLithoSectionsFragment();
         break;
 
       // More

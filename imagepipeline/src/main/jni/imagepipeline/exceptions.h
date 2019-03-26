@@ -10,7 +10,7 @@
 
 #include <jni.h>
 
-#include "java_globals.h"
+extern jclass jRuntimeException_class;
 
 namespace facebook {
 namespace imagepipeline {

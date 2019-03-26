@@ -6,28 +6,19 @@
  */
 package com.facebook.imagepipeline.transcoder;
 
-import com.facebook.imagepipeline.bitmaps.PlatformBitmapFactory;
-import com.facebook.imagepipeline.platform.PlatformDecoder;
+import com.facebook.imageformat.ImageFormat;
 
 /** Factory class to create an {@link SimpleImageTranscoder} */
 public class SimpleImageTranscoderFactory implements ImageTranscoderFactory {
 
   private final int mMaxBitmapSize;
-  private final PlatformDecoder mPlatformDecoder;
-  private final PlatformBitmapFactory mPlatformBitmapFactory;
 
-  public SimpleImageTranscoderFactory(
-      final int maxBitmapSize,
-      final PlatformDecoder platformDecoder,
-      final PlatformBitmapFactory platformBitmapFactory) {
+  public SimpleImageTranscoderFactory(final int maxBitmapSize) {
     mMaxBitmapSize = maxBitmapSize;
-    mPlatformDecoder = platformDecoder;
-    mPlatformBitmapFactory = platformBitmapFactory;
   }
 
   @Override
-  public ImageTranscoder createImageTranscoder(boolean isResizingEnabled) {
-    return new SimpleImageTranscoder(
-        isResizingEnabled, mMaxBitmapSize, mPlatformDecoder, mPlatformBitmapFactory);
+  public ImageTranscoder createImageTranscoder(ImageFormat imageFormat, boolean isResizingEnabled) {
+    return new SimpleImageTranscoder(isResizingEnabled, mMaxBitmapSize);
   }
 }

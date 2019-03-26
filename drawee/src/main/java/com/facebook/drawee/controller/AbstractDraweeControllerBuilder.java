@@ -231,7 +231,8 @@ public abstract class AbstractDraweeControllerBuilder <
   }
 
   /** Sets the controller listener. */
-  public BUILDER setControllerListener(ControllerListener<? super INFO> controllerListener) {
+  public BUILDER setControllerListener(
+      @Nullable ControllerListener<? super INFO> controllerListener) {
     mControllerListener = controllerListener;
     return getThis();
   }
@@ -307,14 +308,18 @@ public abstract class AbstractDraweeControllerBuilder <
 
   /** Builds a regular controller. */
   protected AbstractDraweeController buildController() {
-    FrescoSystrace.beginSection("AbstractDraweeControllerBuilder#buildController");
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.beginSection("AbstractDraweeControllerBuilder#buildController");
+    }
     AbstractDraweeController controller = obtainController();
     controller.setRetainImageOnFailure(getRetainImageOnFailure());
     controller.setContentDescription(getContentDescription());
     controller.setControllerViewportVisibilityListener(getControllerViewportVisibilityListener());
     maybeBuildAndSetRetryManager(controller);
     maybeAttachListeners(controller);
-    FrescoSystrace.endSection();
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.endSection();
+    }
     return controller;
   }
 

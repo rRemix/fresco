@@ -15,12 +15,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import androidx.annotation.Nullable;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
@@ -53,11 +53,8 @@ public class DraweeSpanSimpleTextFragment extends BaseShowcaseFragment {
 
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    final ImageUriProvider imageUriProvider = ImageUriProvider.getInstance(getContext());
-    mInlineImageUri = imageUriProvider.createSampleUri(ImageUriProvider.ImageSize.M);
-    mInlineAnimatedImageUri =
-        Uri.parse(
-            "http://frescolib.org/static/sample-images/fresco_logo_anim_full_frames_with_pause_m.gif");
+    mInlineImageUri = sampleUris().createSampleUri(ImageUriProvider.ImageSize.M);
+    mInlineAnimatedImageUri = sampleUris().createGifUriWithPause(ImageUriProvider.ImageSize.M);
 
     mDraweeSpanTextView = (SimpleDraweeSpanTextView) view.findViewById(R.id.drawee_text_view);
     final Spinner scaleType = (Spinner) view.findViewById(R.id.scaleType);

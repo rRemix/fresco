@@ -147,6 +147,14 @@
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/animated/gif/package-summary.html">com.facebook.animated.gif</a></li>
     <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/animated/giflite/package-summary.html">com.facebook.animated.giflite</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/animated/giflite/decoder/package-summary.html">com.facebook.animated.giflite.decoder</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/animated/giflite/draw/package-summary.html">com.facebook.animated.giflite.draw</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/animated/giflite/drawable/package-summary.html">com.facebook.animated.giflite.drawable</a></li>
+    <li class="api apilevel-">
   <a href="../../../../../../com/facebook/animated/webp/package-summary.html">com.facebook.animated.webp</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/binaryresource/package-summary.html">com.facebook.binaryresource</a></li>
@@ -190,6 +198,8 @@
   <a href="../../../../../../com/facebook/drawable/base/package-summary.html">com.facebook.drawable.base</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/drawee/backends/pipeline/package-summary.html">com.facebook.drawee.backends.pipeline</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/drawee/backends/pipeline/debug/package-summary.html">com.facebook.drawee.backends.pipeline.debug</a></li>
     <li class="selected api apilevel-">
   <a href="../../../../../../com/facebook/drawee/backends/pipeline/info/package-summary.html">com.facebook.drawee.backends.pipeline.info</a></li>
     <li class="api apilevel-">
@@ -259,9 +269,13 @@
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/imagepipeline/datasource/package-summary.html">com.facebook.imagepipeline.datasource</a></li>
     <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/imagepipeline/debug/package-summary.html">com.facebook.imagepipeline.debug</a></li>
+    <li class="api apilevel-">
   <a href="../../../../../../com/facebook/imagepipeline/decoder/package-summary.html">com.facebook.imagepipeline.decoder</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/imagepipeline/drawable/package-summary.html">com.facebook.imagepipeline.drawable</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/imagepipeline/filter/package-summary.html">com.facebook.imagepipeline.filter</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/imagepipeline/image/package-summary.html">com.facebook.imagepipeline.image</a></li>
     <li class="api apilevel-">
@@ -280,6 +294,10 @@
   <a href="../../../../../../com/facebook/imagepipeline/request/package-summary.html">com.facebook.imagepipeline.request</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/imagepipeline/systrace/package-summary.html">com.facebook.imagepipeline.systrace</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/imagepipeline/transcoder/package-summary.html">com.facebook.imagepipeline.transcoder</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/imagepipeline/transformation/package-summary.html">com.facebook.imagepipeline.transformation</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/imageutils/package-summary.html">com.facebook.imageutils</a></li>
     <li class="api apilevel-">
@@ -315,6 +333,7 @@
       <ul>
           <li class="api apilevel-"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImageLoadStatus.html">ImageLoadStatus</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImageOrigin.html">ImageOrigin</a></li>
+          <li class="api apilevel-"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/VisibilityState.html">VisibilityState</a></li>
       </ul>
     </li>
               
@@ -543,7 +562,7 @@ Summary:
             
         </td>
         <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#ImagePerfData(java.lang.String, java.lang.String, com.facebook.imagepipeline.request.ImageRequest, java.lang.Object, com.facebook.imagepipeline.image.ImageInfo, long, long, long, long, long, long, long, int, boolean, boolean, boolean)">ImagePerfData</a></span>(String controllerId, String requestId, <a href="../../../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> imageRequest, Object callerContext, <a href="../../../../../../com/facebook/imagepipeline/image/ImageInfo.html">ImageInfo</a> imageInfo, long controllerSubmitTimeMs, long controllerIntermediateImageSetTimeMs, long controllerFinalImageSetTimeMs, long controllerFailureTimeMs, long controllerCancelTimeMs, long imageRequestStartTimeMs, long imageRequestEndTimeMs, int imageOrigin, boolean isCanceled, boolean isSuccessful, boolean isPrefetch)
+        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#ImagePerfData(java.lang.String, java.lang.String, com.facebook.imagepipeline.request.ImageRequest, java.lang.Object, com.facebook.imagepipeline.image.ImageInfo, long, long, long, long, long, long, long, int, boolean, int, int, int, long, long, java.lang.String)">ImagePerfData</a></span>(String controllerId, String requestId, <a href="../../../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> imageRequest, Object callerContext, <a href="../../../../../../com/facebook/imagepipeline/image/ImageInfo.html">ImageInfo</a> imageInfo, long controllerSubmitTimeMs, long controllerIntermediateImageSetTimeMs, long controllerFinalImageSetTimeMs, long controllerFailureTimeMs, long controllerCancelTimeMs, long imageRequestStartTimeMs, long imageRequestEndTimeMs, int imageOrigin, boolean isPrefetch, int onScreenWidthPx, int onScreenHeightPx, int visibilityState, long visibilityEventTimeMs, long invisibilityEventTime, String componentTag)
         
   </td></tr>
 
@@ -601,6 +620,22 @@ Summary:
             
             
             
+            String
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#getComponentTag()">getComponentTag</a></span>()
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
             long
         </td>
         <td class="jd-linkcol" width="100%">
@@ -610,7 +645,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -626,7 +661,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -642,7 +677,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -658,7 +693,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -674,7 +709,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -690,7 +725,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -706,7 +741,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -722,7 +757,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -738,7 +773,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -754,7 +789,7 @@ Summary:
 
 
 	 
-    <tr class="alt-color api apilevel-" >
+    <tr class=" api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -770,7 +805,7 @@ Summary:
 
 
 	 
-    <tr class=" api apilevel-" >
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol">
             
             
@@ -781,6 +816,54 @@ Summary:
         </td>
         <td class="jd-linkcol" width="100%">
         <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#getIntermediateImageLoadTimeMs()">getIntermediateImageLoadTimeMs</a></span>()
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            long
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#getInvisibilityEventTimeMs()">getInvisibilityEventTimeMs</a></span>()
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            int
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#getOnScreenHeightPx()">getOnScreenHeightPx</a></span>()
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            int
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#getOnScreenWidthPx()">getOnScreenWidthPx</a></span>()
         
   </td></tr>
 
@@ -809,10 +892,10 @@ Summary:
             
             
             
-            boolean
+            long
         </td>
         <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#isCanceled()">isCanceled</a></span>()
+        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#getVisibilityEventTimeMs()">getVisibilityEventTimeMs</a></span>()
         
   </td></tr>
 
@@ -825,10 +908,10 @@ Summary:
             
             
             
-            boolean
+            int
         </td>
         <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#isPrefetch()">isPrefetch</a></span>()
+        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#getVisibilityState()">getVisibilityState</a></span>()
         
   </td></tr>
 
@@ -844,7 +927,7 @@ Summary:
             boolean
         </td>
         <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#isSuccessful()">isSuccessful</a></span>()
+        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfData.html#isPrefetch()">isPrefetch</a></span>()
         
   </td></tr>
 
@@ -1146,7 +1229,7 @@ From class
 
 
 
-<a id="ImagePerfData(java.lang.String, java.lang.String, com.facebook.imagepipeline.request.ImageRequest, java.lang.Object, com.facebook.imagepipeline.image.ImageInfo, long, long, long, long, long, long, long, int, boolean, boolean, boolean)"></a>
+<a id="ImagePerfData(java.lang.String, java.lang.String, com.facebook.imagepipeline.request.ImageRequest, java.lang.Object, com.facebook.imagepipeline.image.ImageInfo, long, long, long, long, long, long, long, int, boolean, int, int, int, long, long, java.lang.String)"></a>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -1159,7 +1242,7 @@ From class
         
       </span>
       <span class="sympad">ImagePerfData</span>
-      <span class="normal">(String controllerId, String requestId, <a href="../../../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> imageRequest, Object callerContext, <a href="../../../../../../com/facebook/imagepipeline/image/ImageInfo.html">ImageInfo</a> imageInfo, long controllerSubmitTimeMs, long controllerIntermediateImageSetTimeMs, long controllerFinalImageSetTimeMs, long controllerFailureTimeMs, long controllerCancelTimeMs, long imageRequestStartTimeMs, long imageRequestEndTimeMs, int imageOrigin, boolean isCanceled, boolean isSuccessful, boolean isPrefetch)</span>
+      <span class="normal">(String controllerId, String requestId, <a href="../../../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> imageRequest, Object callerContext, <a href="../../../../../../com/facebook/imagepipeline/image/ImageInfo.html">ImageInfo</a> imageInfo, long controllerSubmitTimeMs, long controllerIntermediateImageSetTimeMs, long controllerFinalImageSetTimeMs, long controllerFailureTimeMs, long controllerCancelTimeMs, long imageRequestStartTimeMs, long imageRequestEndTimeMs, int imageOrigin, boolean isPrefetch, int onScreenWidthPx, int onScreenHeightPx, int visibilityState, long visibilityEventTimeMs, long invisibilityEventTime, String componentTag)</span>
     </h4>
       <div class="api-level">
         <div>
@@ -1236,6 +1319,37 @@ From class
         Object
       </span>
       <span class="sympad">getCallerContext</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<a id="getComponentTag()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getComponentTag</span>
       <span class="normal">()</span>
     </h4>
       <div class="api-level">
@@ -1626,6 +1740,99 @@ From class
 </div>
 
 
+<a id="getInvisibilityEventTimeMs()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        long
+      </span>
+      <span class="sympad">getInvisibilityEventTimeMs</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<a id="getOnScreenHeightPx()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        int
+      </span>
+      <span class="sympad">getOnScreenHeightPx</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<a id="getOnScreenWidthPx()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        int
+      </span>
+      <span class="sympad">getOnScreenWidthPx</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
 <a id="getRequestId()"></a>
 
 <div class="jd-details api apilevel-"> 
@@ -1657,7 +1864,7 @@ From class
 </div>
 
 
-<a id="isCanceled()"></a>
+<a id="getVisibilityEventTimeMs()"></a>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -1667,9 +1874,40 @@ From class
          
          
          
-        boolean
+        long
       </span>
-      <span class="sympad">isCanceled</span>
+      <span class="sympad">getVisibilityEventTimeMs</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<a id="getVisibilityState()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        int
+      </span>
+      <span class="sympad">getVisibilityState</span>
       <span class="normal">()</span>
     </h4>
       <div class="api-level">
@@ -1701,37 +1939,6 @@ From class
         boolean
       </span>
       <span class="sympad">isPrefetch</span>
-      <span class="normal">()</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      
-  <div class="jd-tagdata jd-tagdescr"><p></p></div>
-
-    </div>
-</div>
-
-
-<a id="isSuccessful()"></a>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-         
-         
-        boolean
-      </span>
-      <span class="sympad">isSuccessful</span>
       <span class="normal">()</span>
     </h4>
       <div class="api-level">

@@ -18,6 +18,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.robolectric.RobolectricTestRunner;
 
+/**
+ * Tests {@link FadeDrawable} with the default configuration.
+ *
+ * @see FadeDrawableAllOnTest for more tests
+ */
 @RunWith(RobolectricTestRunner.class)
 public class FadeDrawableTest {
   private Drawable[] mLayers = new Drawable[] {

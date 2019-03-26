@@ -41,94 +41,77 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public class ImageRequest {
 
-  /**
-   * Cache choice
-   */
+  /** Cache choice */
   private final CacheChoice mCacheChoice;
 
-  /**
-   * Source Uri
-   */
+  /** Source Uri */
   private final Uri mSourceUri;
 
-  private final @SourceUriType
-  int mSourceUriType;
+  private final @SourceUriType int mSourceUriType;
 
-  /**
-   * Source File - for local fetches only, lazily initialized
-   */
+  /** Source File - for local fetches only, lazily initialized */
   private File mSourceFile;
 
-  /**
-   * If set - the client will receive intermediate results
-   */
+  /** If set - the client will receive intermediate results */
   private final boolean mProgressiveRenderingEnabled;
 
-  /**
-   * If set the client will receive thumbnail previews for local images, before the whole image
-   */
+  /** If set the client will receive thumbnail previews for local images, before the whole image */
   private final boolean mLocalThumbnailPreviewsEnabled;
 
   private final ImageDecodeOptions mImageDecodeOptions;
 
-  /**
-   * resize options
-   */
-  private final @Nullable
-  ResizeOptions mResizeOptions;
+  /** resize options */
+  private final @Nullable ResizeOptions mResizeOptions;
 
-  /**
-   * rotation options
-   */
+  /** rotation options */
   private final RotationOptions mRotationOptions;
 
-  /**
-   * Range of bytes to request from the network
-   */
-  private final @Nullable
-  BytesRange mBytesRange;
+  /** Range of bytes to request from the network */
+  private final @Nullable BytesRange mBytesRange;
 
-  /**
-   * Priority levels of this request.
-   */
+  /** Priority levels of this request. */
   private final Priority mRequestPriority;
 
-  /**
-   * Lowest level that is permitted to fetch an image from
-   */
+  /** Lowest level that is permitted to fetch an image from */
   private final RequestLevel mLowestPermittedRequestLevel;
 
-  /**
-   * Whether the disk cache should be used for this request
-   */
+  /** Whether the disk cache should be used for this request */
   private final boolean mIsDiskCacheEnabled;
 
-  /**
-   * Whether the memory cache should be used for this request
-   */
+  /** Whether the memory cache should be used for this request */
   private final boolean mIsMemoryCacheEnabled;
 
   /**
-   * Postprocessor to run on the output bitmap.
+   * Whether to decode prefetched images.
+   * true -> Cache both encoded image and bitmap.
+   * false -> Cache only encoded image and do not decode until image is needed to be shown.
+   * null -> Use pipeline's default
    */
-  private final @Nullable
-  Postprocessor mPostprocessor;
+  private final @Nullable Boolean mDecodePrefetches;
+
+  /** Postprocessor to run on the output bitmap. */
+  private final @Nullable Postprocessor mPostprocessor;
+
+  /** Request listener to use for this image request */
+  private final @Nullable RequestListener mRequestListener;
 
   /**
-   * Request listener to use for this image request
+   * Controls whether resizing is allowed for this request.
+   * true  -> allow for this request.
+   * false -> disallow for this request.
+   * null  -> use default pipeline's setting.
    */
-  private final @Nullable
-  RequestListener mRequestListener;
+  private final @Nullable Boolean mResizingAllowedOverride;
 
-  public static ImageRequest fromFile(@Nullable File file) {
+  public static @Nullable ImageRequest fromFile(@Nullable File file) {
     return (file == null) ? null : ImageRequest.fromUri(UriUtil.getUriForFile(file));
   }
 
-  public static ImageRequest fromUri(@Nullable Uri uri) {
+  public static @Nullable ImageRequest fromUri(@Nullable Uri uri) {
     return (uri == null) ? null : ImageRequestBuilder.newBuilderWithSource(uri).build();
   }
 
-  public static ImageRequest fromUri(@Nullable String uriString) {
+  public static @Nullable ImageRequest fromUri(@Nullable String uriString) {
     return (uriString == null || uriString.length() == 0) ? null : fromUri(Uri.parse(uriString));
   }
 
@@ -151,10 +134,13 @@ public class ImageRequest {
     mLowestPermittedRequestLevel = builder.getLowestPermittedRequestLevel();
     mIsDiskCacheEnabled = builder.isDiskCacheEnabled();
     mIsMemoryCacheEnabled = builder.isMemoryCacheEnabled();
+    mDecodePrefetches = builder.shouldDecodePrefetches();
 
     mPostprocessor = builder.getPostprocessor();
 
     mRequestListener = builder.getRequestListener();
+
+    mResizingAllowedOverride = builder.getResizingAllowedOverride();
   }
 
   public CacheChoice getCacheChoice() {
@@ -165,8 +151,7 @@ public class ImageRequest {
     return mSourceUri;
   }
 
-  public @SourceUriType
-  int getSourceUriType() {
+  public @SourceUriType int getSourceUriType() {
     return mSourceUriType;
   }
 
@@ -178,8 +163,7 @@ public class ImageRequest {
     return (mResizeOptions != null) ? mResizeOptions.height : (int) BitmapUtil.MAX_BITMAP_SIZE;
   }
 
-  public @Nullable
-  ResizeOptions getResizeOptions() {
+  public @Nullable ResizeOptions getResizeOptions() {
     return mResizeOptions;
   }
 
@@ -228,6 +212,14 @@ public class ImageRequest {
     return mIsMemoryCacheEnabled;
   }
 
+  public @Nullable Boolean shouldDecodePrefetches() {
+    return mDecodePrefetches;
+  }
+
+  public @Nullable Boolean getResizingAllowedOverride() {
+    return mResizingAllowedOverride;
+  }
+
   public synchronized File getSourceFile() {
     if (mSourceFile == null) {
       mSourceFile = new File(mSourceUri.getPath());
@@ -235,13 +227,11 @@ public class ImageRequest {
     return mSourceFile;
   }
 
-  public @Nullable
-  Postprocessor getPostprocessor() {
+  public @Nullable Postprocessor getPostprocessor() {
     return mPostprocessor;
   }
 
-  public @Nullable
-  RequestListener getRequestListener() {
+  public @Nullable RequestListener getRequestListener() {
     return mRequestListener;
   }
 
@@ -279,7 +269,8 @@ public class ImageRequest {
         mImageDecodeOptions,
         mResizeOptions,
         mRotationOptions,
-        postprocessorCacheKey);
+        postprocessorCacheKey,
+        mResizingAllowedOverride);
   }
 
   @Override
@@ -293,6 +284,7 @@ public class ImageRequest {
         .add("resizeOptions", mResizeOptions)
         .add("rotationOptions", mRotationOptions)
         .add("bytesRange", mBytesRange)
+        .add("resizingAllowedOverride", mResizingAllowedOverride)
         .toString();
   }
 
@@ -342,12 +334,10 @@ public class ImageRequest {
 
   /**
    * This is a utility method which returns the type of Uri
-   *
    * @param uri The Uri to test
    * @return The type of the given Uri if available or SOURCE_TYPE_UNKNOWN if not
    */
-  private static @SourceUriType
-  int getSourceUriType(final Uri uri) {
+  private static @SourceUriType int getSourceUriType(final Uri uri) {
     if (uri == null) {
       return SOURCE_TYPE_UNKNOWN;
     }

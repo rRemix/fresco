@@ -11,8 +11,9 @@
  */
 package com.facebook.fresco.samples.showcase;
 
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import com.facebook.fresco.samples.showcase.misc.ImageUriProvider;
 
 /**
  * A base classe for ShowcaseFragment
@@ -24,5 +25,9 @@ public abstract class BaseShowcaseFragment extends Fragment implements ShowcaseF
   @Override
   public String getBackstackTag() {
     return null;
+  }
+
+  public ImageUriProvider sampleUris() {
+    return ImageUriProvider.getInstance(getContext());
   }
 }

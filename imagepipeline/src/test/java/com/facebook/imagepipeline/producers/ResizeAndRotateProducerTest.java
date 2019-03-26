@@ -10,6 +10,7 @@ package com.facebook.imagepipeline.producers;
 import static com.facebook.imagepipeline.transcoder.JpegTranscoderUtils.DEFAULT_JPEG_QUALITY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.anyLong;
@@ -36,6 +37,7 @@ import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.common.RotationOptions;
 import com.facebook.imagepipeline.image.EncodedImage;
 import com.facebook.imagepipeline.nativecode.NativeJpegTranscoder;
+import com.facebook.imagepipeline.nativecode.NativeJpegTranscoderFactory;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.testing.FakeClock;
 import com.facebook.imagepipeline.testing.TestExecutorService;
@@ -51,6 +53,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
@@ -63,7 +66,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 @RunWith(RobolectricTestRunner.class)
-@PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "android.*"})
+@PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "androidx.*", "android.*"})
 @Config(manifest = Config.NONE)
 @PrepareOnlyThisForTest({
   NativeJpegTranscoder.class,
@@ -274,7 +277,7 @@ public class ResizeAndRotateProducerTest {
   }
 
   @Test
-  public void testRotateUsingRotationAngleOnly() throws Exception {
+  public void testRotateUsingRotationAngleOnlyForJPEG() throws Exception {
     whenResizingEnabled();
     int rotationAngle = 90;
     whenRequestSpecificRotation(rotationAngle);
@@ -282,6 +285,34 @@ public class ResizeAndRotateProducerTest {
 
     verifyJpegTranscoderInteractions(8, rotationAngle);
     verifyZeroJpegTranscoderExifOrientationInteractions();
+  }
+
+  @Test
+  public void testRotationAngleIsSetForPNG() throws Exception {
+    whenResizingEnabled();
+    testNewResultContainsRotationAngleForImageFormat(DefaultImageFormats.PNG);
+  }
+
+  @Test
+  public void testRotationAngleIsSetForWebp() throws Exception {
+    whenResizingEnabled();
+    testNewResultContainsRotationAngleForImageFormat(DefaultImageFormats.WEBP_SIMPLE);
+  }
+
+  private void testNewResultContainsRotationAngleForImageFormat(ImageFormat imageFormat) {
+    int rotationAngle = 90;
+    whenRequestSpecificRotation(rotationAngle);
+    provideFinalResult(imageFormat, 10, 10, 0, ExifInterface.ORIENTATION_UNDEFINED);
+
+    assertAngleOnNewResult(rotationAngle);
+    verifyZeroJpegTranscoderInteractions();
+    verifyZeroJpegTranscoderExifOrientationInteractions();
+  }
+
+  private void assertAngleOnNewResult(int expectedRotationAngle) {
+    ArgumentCaptor<EncodedImage> captor = ArgumentCaptor.forClass(EncodedImage.class);
+    verify(mConsumer).onNewResult(captor.capture(), eq(Consumer.IS_LAST));
+    assertEquals(expectedRotationAngle, captor.getValue().getRotationAngle());
   }
 
   @Test
@@ -688,11 +719,19 @@ public class ResizeAndRotateProducerTest {
   }
 
   private void whenResizingEnabledIs(boolean resizingEnabled) {
-    NativeJpegTranscoder jpegTranscoder =
+    NativeJpegTranscoder nativeJpegTranscoder =
         new NativeJpegTranscoder(resizingEnabled, MAX_BITMAP_SIZE, false);
+    NativeJpegTranscoderFactory jpegTranscoderFactory = mock(NativeJpegTranscoderFactory.class);
+    when(jpegTranscoderFactory.createImageTranscoder(any(ImageFormat.class), anyBoolean()))
+        .thenReturn(nativeJpegTranscoder);
+
     mResizeAndRotateProducer =
         new ResizeAndRotateProducer(
-            mTestExecutorService, mPooledByteBufferFactory, mInputProducer, jpegTranscoder);
+            mTestExecutorService,
+            mPooledByteBufferFactory,
+            mInputProducer,
+            resizingEnabled,
+            jpegTranscoderFactory);
 
     mResizeAndRotateProducer.produceResults(mConsumer, mProducerContext);
   }

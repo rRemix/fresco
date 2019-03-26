@@ -41,8 +41,10 @@ public class ImageRequestBuilder {
   private @Nullable Postprocessor mPostprocessor = null;
   private boolean mDiskCacheEnabled = true;
   private boolean mMemoryCacheEnabled = true;
+  private @Nullable Boolean mDecodePrefetches = null;
   private @Nullable RequestListener mRequestListener;
   private @Nullable BytesRange mBytesRange = null;
+  private @Nullable Boolean mResizingAllowedOverride = null;
 
   /**
    * Creates a new request builder instance. The setting will be done according to the source type.
@@ -91,7 +93,8 @@ public class ImageRequestBuilder {
         .setRequestPriority(imageRequest.getPriority())
         .setResizeOptions(imageRequest.getResizeOptions())
         .setRequestListener(imageRequest.getRequestListener())
-        .setRotationOptions(imageRequest.getRotationOptions());
+        .setRotationOptions(imageRequest.getRotationOptions())
+        .setShouldDecodePrefetches(imageRequest.shouldDecodePrefetches());
   }
 
   private ImageRequestBuilder() {
@@ -335,6 +338,24 @@ public class ImageRequestBuilder {
   public ImageRequest build() {
     validate();
     return new ImageRequest(this);
+  }
+
+  public @Nullable Boolean shouldDecodePrefetches() {
+    return mDecodePrefetches;
+  }
+
+  public ImageRequestBuilder setShouldDecodePrefetches(@Nullable Boolean shouldDecodePrefetches) {
+    mDecodePrefetches = shouldDecodePrefetches;
+    return this;
+  }
+
+  public ImageRequestBuilder setResizingAllowedOverride(@Nullable Boolean resizingAllowedOverride) {
+    mResizingAllowedOverride = resizingAllowedOverride;
+    return this;
+  }
+
+  public @Nullable Boolean getResizingAllowedOverride() {
+    return mResizingAllowedOverride;
   }
 
   /** An exception class for builder methods. */

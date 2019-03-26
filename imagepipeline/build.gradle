@@ -5,8 +5,8 @@ project.group = GROUP
 version = VERSION_NAME
 
 dependencies {
-    compileOnly "com.android.support:support-annotations:${SUPPORT_LIB_VERSION}"
-    compileOnly "com.android.support:support-core-utils:${SUPPORT_LIB_VERSION}"
+    compileOnly "androidx.annotation:annotation:${versions.androidx.annotation}"
+    compileOnly "androidx.legacy:legacy-support-core-utils:${versions.androidx.legacy_support_core_utils}"
     compileOnly "com.google.code.findbugs:jsr305:${JSR_305_VERSION}"
     compileOnly "com.facebook.infer.annotation:infer-annotation:${INFER_ANNOTATION_VERSION}"
     compileOnly "javax.annotation:javax.annotation-api:${ANNOTATION_API_VERSION}"
@@ -17,10 +17,11 @@ dependencies {
     implementation "com.parse.bolts:bolts-tasks:${BOLTS_ANDROID_VERSION}"
     implementation project(':fbcore')
 
-    testImplementation "com.android.support:support-core-utils:${SUPPORT_LIB_VERSION}"
+    testImplementation "androidx.legacy:legacy-support-core-utils:${versions.androidx.legacy_support_core_utils}"
     testImplementation "com.google.code.findbugs:jsr305:${JSR_305_VERSION}"
     testImplementation project(':imagepipeline-test')
     testImplementation project(':imagepipeline-base-test')
+    testImplementation project(':native-imagetranscoder')
     testImplementation "junit:junit:${JUNIT_VERSION}"
     testImplementation "org.easytesting:fest-assert-core:${FEST_ASSERT_CORE_VERSION}"
     testImplementation "org.mockito:mockito-core:${MOCKITO_CORE_VERSION}"
@@ -37,20 +38,19 @@ dependencies {
 }
 apply from: rootProject.file('release.gradle')
 
-// We download various C++ open-source dependencies from SourceForge into nativedeps/downloads.
-// We then copy both downloaded code and our custom makefiles and headers into nativedeps/merge.
-
-task fetchNativeDeps(dependsOn: [copyLibjpeg]) {
-}
-
 android {
     def ndkLibs = [
         ['bitmaps', []],
-        ['imagepipeline', [copyLibjpeg]],
+        ['imagepipeline', []],
         ['memchunk', []]]
 
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+    }
 
     sourceSets {
         main {

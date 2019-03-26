@@ -95,7 +95,7 @@ public class ImagePipeline {
    *
    * @return unique id
    */
-  private String generateUniqueFutureId() {
+  public String generateUniqueFutureId() {
     return String.valueOf(mIdCounter.getAndIncrement());
   }
 
@@ -350,9 +350,16 @@ public class ImagePipeline {
       return DataSources.immediateFailedDataSource(PREFETCH_EXCEPTION);
     }
     try {
-      Producer<Void> producerSequence = mSuppressBitmapPrefetchingSupplier.get()
-          ? mProducerSequenceFactory.getEncodedImagePrefetchProducerSequence(imageRequest)
-          : mProducerSequenceFactory.getDecodedImagePrefetchProducerSequence(imageRequest);
+      final Boolean shouldDecodePrefetches = imageRequest.shouldDecodePrefetches();
+      final boolean skipBitmapCache =
+          shouldDecodePrefetches != null
+              ? !shouldDecodePrefetches // use imagerequest param if specified
+              : mSuppressBitmapPrefetchingSupplier
+                  .get(); // otherwise fall back to pipeline's default
+      Producer<Void> producerSequence =
+          skipBitmapCache
+              ? mProducerSequenceFactory.getEncodedImagePrefetchProducerSequence(imageRequest)
+              : mProducerSequenceFactory.getDecodedImagePrefetchProducerSequence(imageRequest);
       return submitPrefetchRequest(
           producerSequence,
           imageRequest,
@@ -477,6 +484,15 @@ public class ImagePipeline {
   public void clearDiskCaches() {
     mMainBufferedDiskCache.clearAll();
     mSmallImageBufferedDiskCache.clearAll();
+  }
+
+  /**
+   * Current disk caches size
+   *
+   * @return size in Bytes
+   */
+  public long getUsedDiskCacheSize() {
+    return mMainBufferedDiskCache.getSize() + mSmallImageBufferedDiskCache.getSize();
   }
 
   /**
@@ -625,11 +641,12 @@ public class ImagePipeline {
             });
     return dataSource;
   }
-/**
- * @return {@link CacheKey} for doing bitmap cache lookups in the pipeline.
- */
+  /** @return {@link CacheKey} for doing bitmap cache lookups in the pipeline. */
   @Nullable
-  public CacheKey getCacheKey(ImageRequest imageRequest, Object callerContext) {
+  public CacheKey getCacheKey(@Nullable ImageRequest imageRequest, Object callerContext) {
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.beginSection("ImagePipeline#getCacheKey");
+    }
     final CacheKeyFactory cacheKeyFactory = mCacheKeyFactory;
     CacheKey cacheKey = null;
     if (cacheKeyFactory != null && imageRequest != null) {
@@ -638,6 +655,9 @@ public class ImagePipeline {
       } else {
         cacheKey = cacheKeyFactory.getBitmapCacheKey(imageRequest, callerContext);
       }
+    }
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.endSection();
     }
     return cacheKey;
   }
@@ -662,21 +682,30 @@ public class ImagePipeline {
     return closeableImage;
   }
 
+  public boolean hasCachedImage(@Nullable CacheKey cacheKey) {
+    MemoryCache<CacheKey, CloseableImage> memoryCache = mBitmapMemoryCache;
+    if (memoryCache == null || cacheKey == null) {
+      return false;
+    }
+    return memoryCache.contains(cacheKey);
+  }
+
   private <T> DataSource<CloseableReference<T>> submitFetchRequest(
       Producer<CloseableReference<T>> producerSequence,
       ImageRequest imageRequest,
       ImageRequest.RequestLevel lowestPermittedRequestLevelOnSubmit,
       Object callerContext,
       @Nullable RequestListener requestListener) {
-    FrescoSystrace.beginSection("ImagePipeline#submitFetchRequest");
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.beginSection("ImagePipeline#submitFetchRequest");
+    }
     final RequestListener finalRequestListener =
         getRequestListenerForRequest(imageRequest, requestListener);
 
     try {
       ImageRequest.RequestLevel lowestPermittedRequestLevel =
           ImageRequest.RequestLevel.getMax(
-              imageRequest.getLowestPermittedRequestLevel(),
-              lowestPermittedRequestLevelOnSubmit);
+              imageRequest.getLowestPermittedRequestLevel(), lowestPermittedRequestLevelOnSubmit);
       SettableProducerContext settableProducerContext =
           new SettableProducerContext(
               imageRequest,
@@ -693,8 +722,33 @@ public class ImagePipeline {
     } catch (Exception exception) {
       return DataSources.immediateFailedDataSource(exception);
     } finally {
-      FrescoSystrace.endSection();
+      if (FrescoSystrace.isTracing()) {
+        FrescoSystrace.endSection();
+      }
     }
+  }
+
+  public <T> DataSource<CloseableReference<T>> submitFetchRequest(
+      Producer<CloseableReference<T>> producerSequence,
+      SettableProducerContext settableProducerContext,
+      RequestListener requestListener) {
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.beginSection("ImagePipeline#submitFetchRequest");
+    }
+    try {
+      return CloseableProducerToDataSourceAdapter.create(
+          producerSequence, settableProducerContext, requestListener);
+    } catch (Exception exception) {
+      return DataSources.immediateFailedDataSource(exception);
+    } finally {
+      if (FrescoSystrace.isTracing()) {
+        FrescoSystrace.endSection();
+      }
+    }
+  }
+
+  public ProducerSequenceFactory getProducerSequenceFactory() {
+    return mProducerSequenceFactory;
   }
 
   private DataSource<Void> submitPrefetchRequest(
@@ -728,7 +782,7 @@ public class ImagePipeline {
     }
   }
 
-  private RequestListener getRequestListenerForRequest(
+  public RequestListener getRequestListenerForRequest(
       ImageRequest imageRequest, @Nullable RequestListener requestListener) {
     if (requestListener == null) {
       if (imageRequest.getRequestListener() == null) {

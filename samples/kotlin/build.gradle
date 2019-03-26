@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 buildscript {
-    ext.KOTLIN_VERSION = '1.2.41'
+    ext.KOTLIN_VERSION = '1.3.20'
 
     repositories {
         mavenCentral()
@@ -27,7 +27,7 @@ android {
         versionName "${VERSION_NAME}"
 
         testApplicationId "com.facebook.fresco.samples.kotlin.test"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true // needed for tinting
     }
@@ -60,12 +60,11 @@ android {
 
 dependencies {
     compileOnly "com.google.code.findbugs:jsr305:${JSR_305_VERSION}"
-    compileOnly "com.android.support:support-annotations:${SUPPORT_LIB_VERSION}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN_VERSION}"
-    implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
-    implementation "com.android.support:design:${SUPPORT_LIB_VERSION}"
-    implementation "com.android.support:recyclerview-v7:${SUPPORT_LIB_VERSION}"
-    implementation "com.android.support:cardview-v7:${SUPPORT_LIB_VERSION}"
+    implementation "androidx.appcompat:appcompat:${versions.androidx.appcompat}"
+    implementation "com.google.android.material:material:${versions.material}"
+    implementation "androidx.recyclerview:recyclerview:${versions.androidx.recyclerview}"
+    implementation "androidx.cardview:cardview:${versions.androidx.cardview}"
     implementation "com.facebook.stetho:stetho-okhttp3:${STETHO_VERSION}"
 
     implementation project(':drawee-backends:drawee-pipeline')

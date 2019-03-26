@@ -147,6 +147,14 @@
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/animated/gif/package-summary.html">com.facebook.animated.gif</a></li>
     <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/animated/giflite/package-summary.html">com.facebook.animated.giflite</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/animated/giflite/decoder/package-summary.html">com.facebook.animated.giflite.decoder</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/animated/giflite/draw/package-summary.html">com.facebook.animated.giflite.draw</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/animated/giflite/drawable/package-summary.html">com.facebook.animated.giflite.drawable</a></li>
+    <li class="api apilevel-">
   <a href="../../../../../../com/facebook/animated/webp/package-summary.html">com.facebook.animated.webp</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/binaryresource/package-summary.html">com.facebook.binaryresource</a></li>
@@ -190,6 +198,8 @@
   <a href="../../../../../../com/facebook/drawable/base/package-summary.html">com.facebook.drawable.base</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/drawee/backends/pipeline/package-summary.html">com.facebook.drawee.backends.pipeline</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/drawee/backends/pipeline/debug/package-summary.html">com.facebook.drawee.backends.pipeline.debug</a></li>
     <li class="selected api apilevel-">
   <a href="../../../../../../com/facebook/drawee/backends/pipeline/info/package-summary.html">com.facebook.drawee.backends.pipeline.info</a></li>
     <li class="api apilevel-">
@@ -259,9 +269,13 @@
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/imagepipeline/datasource/package-summary.html">com.facebook.imagepipeline.datasource</a></li>
     <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/imagepipeline/debug/package-summary.html">com.facebook.imagepipeline.debug</a></li>
+    <li class="api apilevel-">
   <a href="../../../../../../com/facebook/imagepipeline/decoder/package-summary.html">com.facebook.imagepipeline.decoder</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/imagepipeline/drawable/package-summary.html">com.facebook.imagepipeline.drawable</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/imagepipeline/filter/package-summary.html">com.facebook.imagepipeline.filter</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/imagepipeline/image/package-summary.html">com.facebook.imagepipeline.image</a></li>
     <li class="api apilevel-">
@@ -280,6 +294,10 @@
   <a href="../../../../../../com/facebook/imagepipeline/request/package-summary.html">com.facebook.imagepipeline.request</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/imagepipeline/systrace/package-summary.html">com.facebook.imagepipeline.systrace</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/imagepipeline/transcoder/package-summary.html">com.facebook.imagepipeline.transcoder</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../com/facebook/imagepipeline/transformation/package-summary.html">com.facebook.imagepipeline.transformation</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/facebook/imageutils/package-summary.html">com.facebook.imageutils</a></li>
     <li class="api apilevel-">
@@ -315,6 +333,7 @@
       <ul>
           <li class="api apilevel-"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImageLoadStatus.html">ImageLoadStatus</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImageOrigin.html">ImageOrigin</a></li>
+          <li class="api apilevel-"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/VisibilityState.html">VisibilityState</a></li>
       </ul>
     </li>
               
@@ -356,27 +375,6 @@
 <div id="api-info-block">
 
 
-
-  
-   
-  
-  
-  
-  
-
-  
-   
-  
-  
-  
-  
-
-  
-   
-  
-  
-  
-  
 
   
    
@@ -438,11 +436,7 @@ Summary:
 
 
   
-  
-  
-
-  
-    extends <a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html">BaseRequestListener</a><br/>
+    extends Object<br/>
   
   
   
@@ -462,21 +456,11 @@ Summary:
 
     <tr>
          	
-        <td colspan="3" class="jd-inheritance-class-cell">java.lang.Object</td>
+        <td colspan="2" class="jd-inheritance-class-cell">java.lang.Object</td>
     </tr>
     
 
     <tr>
-        
-            <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
-         	
-        <td colspan="2" class="jd-inheritance-class-cell"><a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html">com.facebook.imagepipeline.listener.BaseRequestListener</a></td>
-    </tr>
-    
-
-    <tr>
-        
-            <td class="jd-inheritance-space">&nbsp;</td>
         
             <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
          	
@@ -604,7 +588,7 @@ Summary:
             void
         </td>
         <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfMonitor.html#clearImagePerfDataListeners()">clearImagePerfDataListeners</a></span>()
+        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfMonitor.html#addViewportData()">addViewportData</a></span>()
         
   </td></tr>
 
@@ -620,7 +604,39 @@ Summary:
             void
         </td>
         <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfMonitor.html#notifyListeners(com.facebook.drawee.backends.pipeline.info.ImagePerfState, int)">notifyListeners</a></span>(<a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfState.html">ImagePerfState</a> state, int imageLoadStatus)
+        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfMonitor.html#clearImagePerfDataListeners()">clearImagePerfDataListeners</a></span>()
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            void
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfMonitor.html#notifyListenersOfVisibilityStateUpdate(com.facebook.drawee.backends.pipeline.info.ImagePerfState, int)">notifyListenersOfVisibilityStateUpdate</a></span>(<a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfState.html">ImagePerfState</a> state, int visibilityState)
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            void
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfMonitor.html#notifyStatusUpdated(com.facebook.drawee.backends.pipeline.info.ImagePerfState, int)">notifyStatusUpdated</a></span>(<a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfState.html">ImagePerfState</a> state, int imageLoadStatus)
         
   </td></tr>
 
@@ -686,228 +702,6 @@ Summary:
 <table id="inhmethods" class="jd-sumtable"><tr><th>
   <a href="#" class="toggle-all" onclick="return toggleAllInherited(this, null)">[Expand]</a>
   <div style="clear:left;">Inherited Methods</div></th></tr>
-
-
-<tr class="api apilevel-" >
-<td colspan="12">
-  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-com.facebook.imagepipeline.listener.BaseRequestListener" class="jd-expando-trigger closed"
-          ><img id="inherited-methods-com.facebook.imagepipeline.listener.BaseRequestListener-trigger"
-          src="../../../../../../../assets/images/triangle-closed.png"
-          class="jd-expando-trigger-img" /></a>
-From class
-
-  <a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html">com.facebook.imagepipeline.listener.BaseRequestListener</a>
-
-<div id="inherited-methods-com.facebook.imagepipeline.listener.BaseRequestListener">
-  <div id="inherited-methods-com.facebook.imagepipeline.listener.BaseRequestListener-list"
-        class="jd-inheritedlinks">
-  </div>
-  <div id="inherited-methods-com.facebook.imagepipeline.listener.BaseRequestListener-summary" style="display: none;">
-    <table class="jd-sumtable-expando">
-    
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html#onProducerEvent(java.lang.String, java.lang.String, java.lang.String)">onProducerEvent</a></span>(String requestId, String producerName, String eventName)
-        
-        <div class="jd-descrdiv">Called whenever an important producer-specific event occurs.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html#onProducerFinishWithCancellation(java.lang.String, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)">onProducerFinishWithCancellation</a></span>(String requestId, String producerName, Map&lt;String,&nbsp;String&gt; extraMap)
-        
-        <div class="jd-descrdiv">Called once when producer finishes due to cancellation.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html#onProducerFinishWithFailure(java.lang.String, java.lang.String, java.lang.Throwable, java.util.Map<java.lang.String, java.lang.String>)">onProducerFinishWithFailure</a></span>(String requestId, String producerName, Throwable t, Map&lt;String,&nbsp;String&gt; extraMap)
-        
-        <div class="jd-descrdiv">Called when producer finishes processing current unit of work due to an error.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html#onProducerFinishWithSuccess(java.lang.String, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)">onProducerFinishWithSuccess</a></span>(String requestId, String producerName, Map&lt;String,&nbsp;String&gt; extraMap)
-        
-        <div class="jd-descrdiv">Called when a producer successfully finishes processing current unit of work.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html#onProducerStart(java.lang.String, java.lang.String)">onProducerStart</a></span>(String requestId, String producerName)
-        
-        <div class="jd-descrdiv">Called whenever a producer starts processing unit of work.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html#onRequestCancellation(java.lang.String)">onRequestCancellation</a></span>(String requestId)
-        
-        <div class="jd-descrdiv">Called after the request is cancelled.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html#onRequestFailure(com.facebook.imagepipeline.request.ImageRequest, java.lang.String, java.lang.Throwable, boolean)">onRequestFailure</a></span>(<a href="../../../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> request, String requestId, Throwable throwable, boolean isPrefetch)
-        
-        <div class="jd-descrdiv">Called after failure to complete the request (some producer failed).</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html#onRequestStart(com.facebook.imagepipeline.request.ImageRequest, java.lang.Object, java.lang.String, boolean)">onRequestStart</a></span>(<a href="../../../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> request, Object callerContext, String requestId, boolean isPrefetch)
-        
-        <div class="jd-descrdiv">Called when request is about to be submitted to the Orchestrator's executor queue.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html#onRequestSuccess(com.facebook.imagepipeline.request.ImageRequest, java.lang.String, boolean)">onRequestSuccess</a></span>(<a href="../../../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> request, String requestId, boolean isPrefetch)
-        
-        <div class="jd-descrdiv">Called after successful completion of the request (all producers completed successfully).</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html#onUltimateProducerReached(java.lang.String, java.lang.String, boolean)">onUltimateProducerReached</a></span>(String requestId, String producerName, boolean successful)
-        
-        <div class="jd-descrdiv">Called when the producer which can create the final result for a given request has completed.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            boolean
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/BaseRequestListener.html#requiresExtraMap(java.lang.String)">requiresExtraMap</a></span>(String requestId)
-        
-  </td></tr>
-
-
-</table>
-  </div>
-</div>
-</td></tr>
-
 
 
 <tr class="api apilevel-" >
@@ -1111,254 +905,6 @@ From class
 </td></tr>
 
 
-
-<tr class="api apilevel-" >
-<td colspan="12">
-  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-com.facebook.imagepipeline.listener.RequestListener" class="jd-expando-trigger closed"
-          ><img id="inherited-methods-com.facebook.imagepipeline.listener.RequestListener-trigger"
-          src="../../../../../../../assets/images/triangle-closed.png"
-          class="jd-expando-trigger-img" /></a>
-From interface
-
-  <a href="../../../../../../com/facebook/imagepipeline/listener/RequestListener.html">com.facebook.imagepipeline.listener.RequestListener</a>
-
-<div id="inherited-methods-com.facebook.imagepipeline.listener.RequestListener">
-  <div id="inherited-methods-com.facebook.imagepipeline.listener.RequestListener-list"
-        class="jd-inheritedlinks">
-  </div>
-  <div id="inherited-methods-com.facebook.imagepipeline.listener.RequestListener-summary" style="display: none;">
-    <table class="jd-sumtable-expando">
-    
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/RequestListener.html#onRequestCancellation(java.lang.String)">onRequestCancellation</a></span>(String requestId)
-        
-        <div class="jd-descrdiv">Called after the request is cancelled.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/RequestListener.html#onRequestFailure(com.facebook.imagepipeline.request.ImageRequest, java.lang.String, java.lang.Throwable, boolean)">onRequestFailure</a></span>(<a href="../../../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> request, String requestId, Throwable throwable, boolean isPrefetch)
-        
-        <div class="jd-descrdiv">Called after failure to complete the request (some producer failed).</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/RequestListener.html#onRequestStart(com.facebook.imagepipeline.request.ImageRequest, java.lang.Object, java.lang.String, boolean)">onRequestStart</a></span>(<a href="../../../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> request, Object callerContext, String requestId, boolean isPrefetch)
-        
-        <div class="jd-descrdiv">Called when request is about to be submitted to the Orchestrator's executor queue.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/listener/RequestListener.html#onRequestSuccess(com.facebook.imagepipeline.request.ImageRequest, java.lang.String, boolean)">onRequestSuccess</a></span>(<a href="../../../../../../com/facebook/imagepipeline/request/ImageRequest.html">ImageRequest</a> request, String requestId, boolean isPrefetch)
-        
-        <div class="jd-descrdiv">Called after successful completion of the request (all producers completed successfully).</div>
-  
-  </td></tr>
-
-
-</table>
-  </div>
-</div>
-</td></tr>
-
-
-
-<tr class="api apilevel-" >
-<td colspan="12">
-  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-com.facebook.imagepipeline.producers.ProducerListener" class="jd-expando-trigger closed"
-          ><img id="inherited-methods-com.facebook.imagepipeline.producers.ProducerListener-trigger"
-          src="../../../../../../../assets/images/triangle-closed.png"
-          class="jd-expando-trigger-img" /></a>
-From interface
-
-  <a href="../../../../../../com/facebook/imagepipeline/producers/ProducerListener.html">com.facebook.imagepipeline.producers.ProducerListener</a>
-
-<div id="inherited-methods-com.facebook.imagepipeline.producers.ProducerListener">
-  <div id="inherited-methods-com.facebook.imagepipeline.producers.ProducerListener-list"
-        class="jd-inheritedlinks">
-  </div>
-  <div id="inherited-methods-com.facebook.imagepipeline.producers.ProducerListener-summary" style="display: none;">
-    <table class="jd-sumtable-expando">
-    
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/producers/ProducerListener.html#onProducerEvent(java.lang.String, java.lang.String, java.lang.String)">onProducerEvent</a></span>(String requestId, String producerName, String eventName)
-        
-        <div class="jd-descrdiv">Called whenever an important producer-specific event occurs.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/producers/ProducerListener.html#onProducerFinishWithCancellation(java.lang.String, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)">onProducerFinishWithCancellation</a></span>(String requestId, String producerName, Map&lt;String,&nbsp;String&gt; extraMap)
-        
-        <div class="jd-descrdiv">Called once when producer finishes due to cancellation.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/producers/ProducerListener.html#onProducerFinishWithFailure(java.lang.String, java.lang.String, java.lang.Throwable, java.util.Map<java.lang.String, java.lang.String>)">onProducerFinishWithFailure</a></span>(String requestId, String producerName, Throwable t, Map&lt;String,&nbsp;String&gt; extraMap)
-        
-        <div class="jd-descrdiv">Called when producer finishes processing current unit of work due to an error.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/producers/ProducerListener.html#onProducerFinishWithSuccess(java.lang.String, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)">onProducerFinishWithSuccess</a></span>(String requestId, String producerName, Map&lt;String,&nbsp;String&gt; extraMap)
-        
-        <div class="jd-descrdiv">Called when a producer successfully finishes processing current unit of work.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/producers/ProducerListener.html#onProducerStart(java.lang.String, java.lang.String)">onProducerStart</a></span>(String requestId, String producerName)
-        
-        <div class="jd-descrdiv">Called whenever a producer starts processing unit of work.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/producers/ProducerListener.html#onUltimateProducerReached(java.lang.String, java.lang.String, boolean)">onUltimateProducerReached</a></span>(String requestId, String producerName, boolean successful)
-        
-        <div class="jd-descrdiv">Called when the producer which can create the final result for a given request has completed.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            boolean
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/facebook/imagepipeline/producers/ProducerListener.html#requiresExtraMap(java.lang.String)">requiresExtraMap</a></span>(String requestId)
-        
-  </td></tr>
-
-
-</table>
-  </div>
-</div>
-</td></tr>
-
-
 </table>
 
 
@@ -1470,6 +1016,37 @@ From interface
 </div>
 
 
+<a id="addViewportData()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">addViewportData</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
 <a id="clearImagePerfDataListeners()"></a>
 
 <div class="jd-details api apilevel-"> 
@@ -1501,7 +1078,7 @@ From interface
 </div>
 
 
-<a id="notifyListeners(com.facebook.drawee.backends.pipeline.info.ImagePerfState, int)"></a>
+<a id="notifyListenersOfVisibilityStateUpdate(com.facebook.drawee.backends.pipeline.info.ImagePerfState, int)"></a>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -1513,7 +1090,38 @@ From interface
          
         void
       </span>
-      <span class="sympad">notifyListeners</span>
+      <span class="sympad">notifyListenersOfVisibilityStateUpdate</span>
+      <span class="normal">(<a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfState.html">ImagePerfState</a> state, int visibilityState)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<a id="notifyStatusUpdated(com.facebook.drawee.backends.pipeline.info.ImagePerfState, int)"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">notifyStatusUpdated</span>
       <span class="normal">(<a href="../../../../../../com/facebook/drawee/backends/pipeline/info/ImagePerfState.html">ImagePerfState</a> state, int imageLoadStatus)</span>
     </h4>
       <div class="api-level">

@@ -15,16 +15,14 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import com.facebook.common.util.UriUtil;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.fragment.app.Fragment;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.drawable.ScalingUtils.ScaleType;
@@ -33,7 +31,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.fresco.samples.showcase.BaseShowcaseFragment;
 import com.facebook.fresco.samples.showcase.R;
 import com.facebook.fresco.samples.showcase.misc.ImageUriProvider;
-import com.facebook.imagepipeline.request.ImageRequest;
 
 /**
  * A {@link Fragment} that illustrates the different drawables one can set in a hierarchy.
@@ -54,11 +51,11 @@ public class DraweeHierarchyFragment extends BaseShowcaseFragment {
 
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    final ImageUriProvider imageUriProvider = ImageUriProvider.getInstance(getContext());
-    final Uri uriSuccess = imageUriProvider.createSampleUri(
-        ImageUriProvider.ImageSize.XL,
-        ImageUriProvider.UriModification.CACHE_BREAKER);
-    final Uri uriFailure = imageUriProvider.createNonExistingUri();
+    final Uri uriSuccess =
+        sampleUris()
+            .createSampleUri(
+                ImageUriProvider.ImageSize.XL, ImageUriProvider.UriModification.CACHE_BREAKER);
+    final Uri uriFailure = sampleUris().createNonExistingUri();
 
     final SimpleDraweeView draweeView = view.findViewById(R.id.drawee);
     final SwitchCompat retrySwitch = view.findViewById(R.id.retry_enabled);

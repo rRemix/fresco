@@ -15,7 +15,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import com.facebook.common.internal.ImmutableMap;
 import com.facebook.common.internal.VisibleForTesting;
 import com.facebook.common.references.CloseableReference;
@@ -27,6 +26,7 @@ import com.facebook.imagepipeline.image.ImmutableQualityInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import java.util.Map;
 import java.util.concurrent.Executor;
+import javax.annotation.Nullable;
 
 /**
  * A producer that creates video thumbnails.
@@ -58,10 +58,7 @@ public class LocalVideoThumbnailProducer implements
     final ImageRequest imageRequest = producerContext.getImageRequest();
     final StatefulProducerRunnable cancellableProducerRunnable =
         new StatefulProducerRunnable<CloseableReference<CloseableImage>>(
-            consumer,
-            listener,
-            PRODUCER_NAME,
-            requestId) {
+            consumer, listener, PRODUCER_NAME, requestId) {
           @Override
           protected void onSuccess(CloseableReference<CloseableImage> result) {
             super.onSuccess(result);
@@ -75,14 +72,13 @@ public class LocalVideoThumbnailProducer implements
           }
 
           @Override
-          protected CloseableReference<CloseableImage> getResult() throws Exception {
+          protected @Nullable CloseableReference<CloseableImage> getResult() throws Exception {
             String path = getLocalFilePath(imageRequest);
             if (path == null) {
               return null;
             }
-            Bitmap thumbnailBitmap = ThumbnailUtils.createVideoThumbnail(
-                path,
-                calculateKind(imageRequest));
+            Bitmap thumbnailBitmap =
+                ThumbnailUtils.createVideoThumbnail(path, calculateKind(imageRequest));
             if (thumbnailBitmap == null) {
               return null;
             }

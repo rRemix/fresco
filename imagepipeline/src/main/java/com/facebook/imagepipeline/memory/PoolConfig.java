@@ -11,7 +11,7 @@ import com.facebook.common.internal.Preconditions;
 import com.facebook.common.memory.MemoryTrimmableRegistry;
 import com.facebook.common.memory.NoOpMemoryTrimmableRegistry;
 import com.facebook.imagepipeline.systrace.FrescoSystrace;
-
+import com.facebook.imageutils.BitmapUtil;
 import javax.annotation.concurrent.Immutable;
 
 /**
@@ -19,6 +19,9 @@ import javax.annotation.concurrent.Immutable;
  */
 @Immutable
 public class PoolConfig {
+
+  public static final int BITMAP_POOL_MAX_BITMAP_SIZE_DEFAULT =
+      1024 * 1024 * BitmapUtil.ARGB_8888_BYTES_PER_PIXEL;
 
   // There are a lot of parameters in this class. Please follow strict alphabetical order.
 
@@ -31,26 +34,30 @@ public class PoolConfig {
   private final PoolParams mSmallByteArrayPoolParams;
   private final PoolStatsTracker mSmallByteArrayPoolStatsTracker;
   private final String mBitmapPoolType;
-  private final int mBitmapPoolMaxSize;
+  private final int mBitmapPoolMaxPoolSize;
+  private final int mBitmapPoolMaxBitmapSize;
+  private final boolean mRegisterLruBitmapPoolAsMemoryTrimmable;
 
   private PoolConfig(Builder builder) {
-    FrescoSystrace.beginSection("PoolConfig()");
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.beginSection("PoolConfig()");
+    }
     mBitmapPoolParams =
-        builder.mBitmapPoolParams == null ?
-            DefaultBitmapPoolParams.get() :
-            builder.mBitmapPoolParams;
+        builder.mBitmapPoolParams == null
+            ? DefaultBitmapPoolParams.get()
+            : builder.mBitmapPoolParams;
     mBitmapPoolStatsTracker =
-        builder.mBitmapPoolStatsTracker == null ?
-            NoOpPoolStatsTracker.getInstance() :
-            builder.mBitmapPoolStatsTracker;
+        builder.mBitmapPoolStatsTracker == null
+            ? NoOpPoolStatsTracker.getInstance()
+            : builder.mBitmapPoolStatsTracker;
     mFlexByteArrayPoolParams =
-        builder.mFlexByteArrayPoolParams == null ?
-            DefaultFlexByteArrayPoolParams.get() :
-            builder.mFlexByteArrayPoolParams;
+        builder.mFlexByteArrayPoolParams == null
+            ? DefaultFlexByteArrayPoolParams.get()
+            : builder.mFlexByteArrayPoolParams;
     mMemoryTrimmableRegistry =
-        builder.mMemoryTrimmableRegistry == null ?
-            NoOpMemoryTrimmableRegistry.getInstance() :
-            builder.mMemoryTrimmableRegistry;
+        builder.mMemoryTrimmableRegistry == null
+            ? NoOpMemoryTrimmableRegistry.getInstance()
+            : builder.mMemoryTrimmableRegistry;
     mMemoryChunkPoolParams =
         builder.mMemoryChunkPoolParams == null
             ? DefaultNativeMemoryChunkPoolParams.get()
@@ -60,18 +67,25 @@ public class PoolConfig {
             ? NoOpPoolStatsTracker.getInstance()
             : builder.mMemoryChunkPoolStatsTracker;
     mSmallByteArrayPoolParams =
-        builder.mSmallByteArrayPoolParams == null ?
-            DefaultByteArrayPoolParams.get() :
-            builder.mSmallByteArrayPoolParams;
+        builder.mSmallByteArrayPoolParams == null
+            ? DefaultByteArrayPoolParams.get()
+            : builder.mSmallByteArrayPoolParams;
     mSmallByteArrayPoolStatsTracker =
-        builder.mSmallByteArrayPoolStatsTracker == null ?
-            NoOpPoolStatsTracker.getInstance() :
-            builder.mSmallByteArrayPoolStatsTracker;
+        builder.mSmallByteArrayPoolStatsTracker == null
+            ? NoOpPoolStatsTracker.getInstance()
+            : builder.mSmallByteArrayPoolStatsTracker;
 
     mBitmapPoolType =
         builder.mBitmapPoolType == null ? BitmapPoolType.DEFAULT : builder.mBitmapPoolType;
-    mBitmapPoolMaxSize = builder.mBitmapPoolMaxSize;
-    FrescoSystrace.endSection();
+    mBitmapPoolMaxPoolSize = builder.mBitmapPoolMaxPoolSize;
+    mBitmapPoolMaxBitmapSize =
+        builder.mBitmapPoolMaxBitmapSize > 0
+            ? builder.mBitmapPoolMaxBitmapSize
+            : BITMAP_POOL_MAX_BITMAP_SIZE_DEFAULT;
+    mRegisterLruBitmapPoolAsMemoryTrimmable = builder.mRegisterLruBitmapPoolAsMemoryTrimmable;
+    if (FrescoSystrace.isTracing()) {
+      FrescoSystrace.endSection();
+    }
   }
 
   public PoolParams getBitmapPoolParams() {
@@ -110,8 +124,16 @@ public class PoolConfig {
     return mBitmapPoolType;
   }
 
-  public int getBitmapPoolMaxSize() {
-    return mBitmapPoolMaxSize;
+  public int getBitmapPoolMaxPoolSize() {
+    return mBitmapPoolMaxPoolSize;
+  }
+
+  public int getBitmapPoolMaxBitmapSize() {
+    return mBitmapPoolMaxBitmapSize;
+  }
+
+  public boolean isRegisterLruBitmapPoolAsMemoryTrimmable() {
+    return mRegisterLruBitmapPoolAsMemoryTrimmable;
   }
 
   public static Builder newBuilder() {
@@ -129,7 +151,9 @@ public class PoolConfig {
     private PoolParams mSmallByteArrayPoolParams;
     private PoolStatsTracker mSmallByteArrayPoolStatsTracker;
     private String mBitmapPoolType;
-    private int mBitmapPoolMaxSize;
+    private int mBitmapPoolMaxPoolSize;
+    private int mBitmapPoolMaxBitmapSize;
+    private boolean mRegisterLruBitmapPoolAsMemoryTrimmable;
 
     private Builder() {
     }
@@ -187,9 +211,19 @@ public class PoolConfig {
       return this;
     }
 
-    public Builder setBitmapPoolMaxSize(int bitmapPoolMaxSize) {
-      mBitmapPoolMaxSize = bitmapPoolMaxSize;
+    public Builder setBitmapPoolMaxPoolSize(int bitmapPoolMaxPoolSize) {
+      mBitmapPoolMaxPoolSize = bitmapPoolMaxPoolSize;
       return this;
+    }
+
+    public Builder setBitmapPoolMaxBitmapSize(int bitmapPoolMaxBitmapSize) {
+      mBitmapPoolMaxBitmapSize = bitmapPoolMaxBitmapSize;
+      return this;
+    }
+
+    public void setRegisterLruBitmapPoolAsMemoryTrimmable(
+        boolean registerLruBitmapPoolAsMemoryTrimmable) {
+      mRegisterLruBitmapPoolAsMemoryTrimmable = registerLruBitmapPoolAsMemoryTrimmable;
     }
   }
 }
